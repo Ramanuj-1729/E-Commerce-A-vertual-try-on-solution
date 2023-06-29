@@ -1,55 +1,41 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import { useState, useRef, useEffect, useCallback } from 'react';
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Autoplay } from 'swiper';
 
-const HomeCarousel = () => {
-    let [scrollLeftValue, setScrollLeftValue] = useState(0);
-    const carouselRef = useRef(null);
-    let numberOfImage = 4;
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
 
-    const slideLeft = () => {
-        let scrollWidth = carouselRef.current.clientWidth;
-        setScrollLeftValue(scrollLeftValue = scrollLeftValue - scrollWidth);
-        if (scrollLeftValue < 0) {
-            setScrollLeftValue(scrollLeftValue = (scrollWidth * (numberOfImage)));
-        }
-        carouselRef.current.scrollLeft = scrollLeftValue;
-    }
+// import required modules
+import { Navigation } from "swiper";
 
-
-    const slideRight = useCallback(() => {
-        let scrollWidth = carouselRef.current.clientWidth;
-        setScrollLeftValue(scrollLeftValue = scrollLeftValue + scrollWidth);
-        if (scrollLeftValue > scrollWidth * (numberOfImage - 1)) {
-            setScrollLeftValue(scrollLeftValue = 0);
-        }
-        carouselRef.current.scrollLeft = scrollLeftValue;
-    }, [numberOfImage, scrollLeftValue])
-
-    useEffect(() => {
-        setInterval(() => {
-            slideRight();
-        }, 7000);
-    }, [slideRight]);
-
-
-
-    useEffect(() => {
-        carouselRef.current.scrollTop = 0;
-    }, [])
-
+export default function App() {
+    SwiperCore.use([Autoplay]);
 
     return (
-        <div className="wrapper flex relative max-w-full mx-auto my-0">
-            <ChevronLeftIcon onClick={() => { slideLeft(); }} className='h-6 w-6 absolute top-1/2 left-5 cursor-pointer text-center bg-white rounded-full' />
-            <div ref={carouselRef} className="carousel whitespace-nowrap flex aspect-video overflow-x-auto snap-x snap-mandatory scroll-smooth" id="scroll-bar-none">
-                <img className="grow shrink-0 basis-full snap-start object-cover select-none" src="/images/img1.jpg" alt="img1" />
-                <img className="grow shrink-0 basis-full snap-start object-cover select-none" src="/images/img2.jpg" alt="img1" />
-                <img className="grow shrink-0 basis-full snap-start object-cover select-none" src="/images/img3.jpg" alt="img1" />
-                <img className="grow shrink-0 basis-full snap-start object-cover select-none" src="/images/img4.jpg" alt="img1" />
+        <div className='relative'>
+            <div>
+                <Swiper
+                    slidesPerView={1}
+                    spaceBetween={30}
+                    loop={true}
+                    navigation={{ nextEl: ".arrow-left", prevEl: ".arrow-right" }}
+                    modules={[Navigation]}
+                    className="mySwiper h-screen"
+                    autoplay={{
+                        delay: 5000,
+                        disableOnInteraction: false,
+                    }}
+                >
+                    <SwiperSlide><img src="/images/img1.jpg" alt="" /></SwiperSlide>
+                    <SwiperSlide><img src="/images/img2.jpg" alt="" /></SwiperSlide>
+                    <SwiperSlide><img src="/images/img3.jpg" alt="" /></SwiperSlide>
+                    <SwiperSlide><img src="/images/img4.jpg" alt="" /></SwiperSlide>
+                </Swiper >
             </div>
-            <ChevronRightIcon onClick={() => { slideRight(); }} className='h-6 w-6 absolute top-1/2 right-5 cursor-pointer text-center bg-white rounded-full' />
+            <ChevronLeftIcon className="arrow-left h-8 w-8 absolute z-10 top-1/2 left-5 cursor-pointer text-red bg-gray rounded-full p-2 hover:text-white hover:bg-red">Prev</ChevronLeftIcon>
+            <ChevronRightIcon className="arrow-right h-8 w-8 absolute z-10 top-1/2 right-5 cursor-pointer text-red bg-gray rounded-full p-2 hover:text-white hover:bg-red">next</ChevronRightIcon>
         </div>
     );
 }
-
-export default HomeCarousel;

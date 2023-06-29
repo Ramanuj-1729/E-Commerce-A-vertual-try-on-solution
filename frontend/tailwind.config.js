@@ -19,7 +19,8 @@ module.exports = {
       black: "#000000",
       white: "#ffffff",
       gray: "#b6b6b6",
-      fadeFont: "#484848"
+      fadeFont: "#484848",
+      red: "#d9121f",
     },
     screens: {
       'smallPhone': '320px', // Phone - portrait
