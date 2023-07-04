@@ -9,10 +9,10 @@ module.exports = {
         'poppins': ['Poppins', 'sans-serif']
       },
       animation: {
-        
+
       },
       keyframes: {
-        
+
       }
     },
     colors: {
@@ -21,6 +21,7 @@ module.exports = {
       gray: "#b6b6b6",
       fadeFont: "#484848",
       red: "#d9121f",
+      hoverRed: "#e82e3b",
     },
     screens: {
       'smallPhone': '320px', // Phone - portrait
