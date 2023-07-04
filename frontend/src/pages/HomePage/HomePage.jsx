@@ -3,6 +3,7 @@ import HomeCarousel from '../../components/HomeCarousel/HomeCarousel';
 import CategoryBar from '../../components/CategoryBar/CategoryBar';
 import FeaturedProducts from '../../components/FeaturedProducts/FeaturedProducts';
 import NewArrivalSlider from '../../components/NewArrivalSlider/NewArrivalSlider';
+import HomeProductList from '../../components/HomeProductList/HomeProductList';
 
 const HomePage = () => {
     return (
@@ -21,6 +22,10 @@ const HomePage = () => {
 
             <section>
                 <NewArrivalSlider />
+            </section>
+
+            <section>
+                <HomeProductList />
             </section>
         </>
     );

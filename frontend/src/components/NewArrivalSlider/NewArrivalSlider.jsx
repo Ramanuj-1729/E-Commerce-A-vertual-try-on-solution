@@ -4,7 +4,7 @@ import Slider from "../shared/Slider/Slider";
 
 const NewArrivalSlider = () => {
     return (
-        <div className="mb-10">
+        <div className="mb-16">
             <div className="flex items-center justify-center mb-5">
                 <h1 className="font-medium text-3xl">New Arrival</h1>
             </div>
