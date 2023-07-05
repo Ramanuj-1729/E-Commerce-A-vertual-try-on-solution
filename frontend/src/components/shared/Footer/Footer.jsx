@@ -2,9 +2,9 @@ import { } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
 const Footer = () => {
     return (
-        <div className='flex items-center justify-between mx-12'>
-            <div>
-                <div className='flex items-center justify-center space-x-20 mb-10'>
+        <div className='mx-12'>
+            <div className='flex justify-between mb-10'>
+                <div className='flex space-x-32'>
                     <div>
                         <ul className='space-y-4'>
                             <li>Jeans</li>
@@ -39,32 +39,43 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className='flex items-center justify-start space-x-8 mb-10'>
-                    <img className='h-6' src="images/visa.png" alt="" />
-                    <img className='h-6' src="images/mastercard.png" alt="" />
-                    <img className='h-6' src="images/maestro.png" alt="" />
-                    <img className='h-6' src="images/rupay.png" alt="" />
-                </div>
+                <div className='basis-1/2'>
+                    <h1 className='font-medium text-4xl mb-5'>Join our newsletter and get $20 for your first order</h1>
 
-                <span>CHAD © 2021. All Rights Reserved</span>
+                    <div className='flex items-center justify-center mb-10'>
+                        <input className='border-[1px] border-gray px-5 py-4 rounded-full w-full mr-5' type="text" name="" id="" placeholder='Email address' />
+                        <button className='bg-red px-20 py-4 rounded-full text-white font-semibold text-lg hover:bg-hoverRed'>Subscribe</button>
+                    </div>
+
+                    <div className='flex items-center space-x-6'>
+                        <img className='h-6' src="images/facebook.svg" alt="" />
+                        <img className='h-6' src="images/twitter.svg" alt="" />
+                        <img className='h-6' src="images/pinterest.svg" alt="" />
+                        <img className='h-6' src="images/instagram.svg" alt="" />
+                        <img className='h-6' src="images/youtube.svg" alt="" />
+                    </div>
+                </div>
             </div>
 
-            <div>
-                <h1 className='font-medium text-5xl mb-5'>Join our newsletter for free</h1>
 
-                <div className='flex items-center justify-center mb-5'>
-                    <input className='border-[1px] border-gray px-5 py-3 rounded-full w-full mr-4' type="text" name="" id="" placeholder='Email address' />
-                    <button className='bg-red px-14 py-4 rounded-full text-white font-semibold text-lg hover:bg-hoverRed'>Subscribe</button>
-                </div>
-
+            <div className='flex items-center justify-between mb-5'>
                 <div>
+                    <div className='flex items-center justify-start space-x-8 mb-10'>
+                        <img className='h-6' src="images/visa.png" alt="" />
+                        <img className='h-6' src="images/mastercard.png" alt="" />
+                        <img className='h-6' src="images/maestro.png" alt="" />
+                        <img className='h-6' src="images/rupay.png" alt="" />
+                    </div>
 
+                    <span className='font-medium'>CHAD © 2021. All Rights Reserved</span>
                 </div>
-                <div className='space-x-4 flex items-center'>
+
+                <div className='space-x-4 flex items-center basis-1/2'>
                     <span className=' font-semibold text-3xl'>(+91) 1234567890</span>
                     <NavLink to="" className='text-xl underline'>info@chad.com</NavLink>
                 </div>
             </div>
+
         </div>
     );
 }

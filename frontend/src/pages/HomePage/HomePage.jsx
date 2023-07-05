@@ -32,10 +32,6 @@ const HomePage = () => {
             <section>
                 <FeatureBar />
             </section>
-
-            <section>
-                <FeatureBar />
-            </section>
             
         </>
     );
