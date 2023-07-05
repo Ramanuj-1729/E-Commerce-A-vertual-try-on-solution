@@ -5,6 +5,7 @@ import FeaturedProducts from '../../components/FeaturedProducts/FeaturedProducts
 import NewArrivalSlider from '../../components/NewArrivalSlider/NewArrivalSlider';
 import HomeProductList from '../../components/HomeProductList/HomeProductList';
 import FeatureBar from '../../components/FeatureBar/FeatureBar';
+import ReviewSlider from '../../components/ReviewSlider/ReviewSlider';
 
 const HomePage = () => {
     return (
@@ -30,9 +31,12 @@ const HomePage = () => {
             </section>
 
             <section>
+                <ReviewSlider />
+            </section>
+
+            <section>
                 <FeatureBar />
             </section>
-            
         </>
     );
 }
