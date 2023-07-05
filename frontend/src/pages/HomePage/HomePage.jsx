@@ -4,6 +4,7 @@ import CategoryBar from '../../components/CategoryBar/CategoryBar';
 import FeaturedProducts from '../../components/FeaturedProducts/FeaturedProducts';
 import NewArrivalSlider from '../../components/NewArrivalSlider/NewArrivalSlider';
 import HomeProductList from '../../components/HomeProductList/HomeProductList';
+import FeatureBar from '../../components/FeatureBar/FeatureBar';
 
 const HomePage = () => {
     return (
@@ -26,6 +27,10 @@ const HomePage = () => {
 
             <section>
                 <HomeProductList />
+            </section>
+
+            <section>
+                <FeatureBar />
             </section>
         </>
     );
