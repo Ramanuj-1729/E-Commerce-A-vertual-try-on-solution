@@ -1,13 +1,15 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { MagnifyingGlassIcon, UserIcon, HeartIcon, ShoppingCartIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import Dropdown from '../../Dropdown/Dropdown';
 import NavCategories from '../../NavCategories/NavCategories';
 
 const Navbar = () => {
+    const navigate = useNavigate();
     return (
-        <nav className="bg-white border-gray-200 dark:bg-gray-900">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto pt-6 px-8 relative">
+        // style={{ position: 'fixed', width: '100%', top: '0' }}
+        <nav className="bg-white border-gray-200 dark:bg-gray-900 z-20">
+            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto pt-6 px-12 relative">
                 <NavLink className="pb-6" to="/">
                     <img src="/images/chad_logo.png" className="h-8 mr-3" alt="Flowbite Logo" />
                 </NavLink>
@@ -15,7 +17,7 @@ const Navbar = () => {
                 <div className="flex items-center md:order-2">
                     <div className='flex items-center space-x-5'>
                         <div className='flex items-center space-x-1 group'>
-                            <button className='flex items-center pb-6'>Shop<ChevronDownIcon className='h-4 w-4' /></button>
+                            <button onClick={() => navigate('/collections/all')} className='flex items-center pb-6'>Shop<ChevronDownIcon className='h-4 w-4' /></button>
                             <div className='overflow-hidden'>
                                 <Dropdown>
                                     <div className='flex justify-center space-x-40 my-5'>
