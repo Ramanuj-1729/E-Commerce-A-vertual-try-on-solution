@@ -1,7 +1,7 @@
 import { SwiperSlide } from "swiper/react";
 import Slider from "../shared/Slider/Slider";
 
-const HomeCarousel = () => {
+const HomeSlider = () => {
 
     return (
         <Slider slidesPerView={1} sliderClass="h-screen" autoPlay={true} arrowLeftPosition="20px" arrowRightPosition="20px">
@@ -13,4 +13,4 @@ const HomeCarousel = () => {
     );
 }
 
-export default HomeCarousel;
+export default HomeSlider;

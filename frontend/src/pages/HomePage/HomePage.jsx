@@ -1,17 +1,16 @@
 import React from 'react';
-import HomeCarousel from '../../components/HomeCarousel/HomeCarousel';
+import HomeSlider from '../../components/HomeSlider/HomeSlider';
 import CategoryBar from '../../components/CategoryBar/CategoryBar';
 import FeaturedProducts from '../../components/FeaturedProducts/FeaturedProducts';
 import NewArrivalSlider from '../../components/NewArrivalSlider/NewArrivalSlider';
 import HomeProductList from '../../components/HomeProductList/HomeProductList';
-import FeatureBar from '../../components/FeatureBar/FeatureBar';
 import ReviewSlider from '../../components/ReviewSlider/ReviewSlider';
 
 const HomePage = () => {
     return (
         <>
             <section>
-                <HomeCarousel />
+                <HomeSlider />
             </section>
 
             <section>
@@ -32,10 +31,6 @@ const HomePage = () => {
 
             <section>
                 <ReviewSlider />
-            </section>
-
-            <section>
-                <FeatureBar />
             </section>
         </>
     );

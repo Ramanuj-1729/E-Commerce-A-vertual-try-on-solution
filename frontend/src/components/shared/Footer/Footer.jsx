@@ -1,8 +1,10 @@
 import { } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
+import FeatureBar from '../../FeatureBar/FeatureBar';
 const Footer = () => {
     return (
         <div className='mx-12'>
+            <FeatureBar />
             <div className='flex justify-between mb-10'>
                 <div className='flex space-x-32'>
                     <div>

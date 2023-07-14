@@ -2,7 +2,7 @@ import React from 'react';
 
 const ReviewCard = () => {
     return (
-        <div className='relative border-2 border-gray rounded-md m-5'>
+        <div className='relative border-2 border-gray rounded-md my-5'>
             <div className='flex items-center justify-center flex-col py-5 px-10 text-justify'>
                 <p className='mb-4 font-medium'>“This is an super space for your customers quote. Don’t worry it works smooth as pie. You will get all what you need by writting a text here”</p>
                 <span className='font-medium text-gray'>Ketan Sarna</span>

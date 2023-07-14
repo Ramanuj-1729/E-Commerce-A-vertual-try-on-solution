@@ -3,7 +3,7 @@ import { Bars3BottomRightIcon, HeartIcon, MagnifyingGlassIcon, StarIcon } from '
 
 const SingleProductCard = () => {
     return (
-        <div className='group w-80'>
+        <div className='group'>
             <div className='relative mb-3'>
                 <div className='flex items-center justify-center bg-gray cursor-pointer aspect-h-1 aspect-w-1 overflow-hidden'>
                     <img className='h-full w-full object-cover object-center' src="/images/p1.png" alt="" />

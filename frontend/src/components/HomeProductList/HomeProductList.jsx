@@ -3,7 +3,7 @@ import SingleProductCard from '../shared/SingleProductCard/SingleProductCard';
 
 const HomeProductList = () => {
     return (
-        <div className='flex items-center justify-center flex-col mb-12'>
+        <div className='flex items-center justify-center flex-col mb-12 mx-12'>
             <div className='flex items-center justify-center mb-5'>
                 <h1 className='font-medium text-3xl'>Product List</h1>
             </div>

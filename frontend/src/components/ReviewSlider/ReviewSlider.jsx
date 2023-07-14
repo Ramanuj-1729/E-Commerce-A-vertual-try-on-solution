@@ -8,8 +8,8 @@ const ReviewSlider = () => {
             <div className="flex items-center justify-center mb-5">
                 <h1 className="font-medium text-3xl">Out customers says</h1>
             </div>
-            <div className="mx-8">
-                <Slider slidesPerView={4} autoPlay={false} arrowLeftPosition="-20px" arrowRightPosition="-20px">
+            <div className="mx-12">
+                <Slider slidesPerView={4} autoPlay={false} spaceBetween={40}>
                     <SwiperSlide><ReviewCard /></SwiperSlide>
                     <SwiperSlide><ReviewCard /></SwiperSlide>
                     <SwiperSlide><ReviewCard /></SwiperSlide>
