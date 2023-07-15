@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { MagnifyingGlassIcon, UserIcon, HeartIcon, ShoppingCartIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import Dropdown from '../../Dropdown/Dropdown';
 import NavCategories from '../../NavCategories/NavCategories';
+import Cart from '../../Cart/Cart';
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const [toggleCart, setToggleCart] = useState(false);
+    const onCartClick = () => {
+        console.log(toggleCart);
+        setToggleCart(current => !current); 
+    }
+
     return (
         // style={{ position: 'fixed', width: '100%', top: '0' }}
         <nav className="bg-white border-gray-200 dark:bg-gray-900 z-20">
+            <Cart onCloseClick={onCartClick} toggleCart={toggleCart} />
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto pt-6 px-12 relative">
                 <NavLink className="pb-6" to="/">
                     <img src="/images/chad_logo.png" className="h-8 mr-3" alt="Flowbite Logo" />
@@ -205,10 +213,12 @@ const Navbar = () => {
                         <li className='pb-6'><UserIcon className='h-6 w-6 cursor-pointer' /></li>
                         <li className='pb-6'><HeartIcon className='h-6 w-6 cursor-pointer' /></li>
                         <li className='relative cursor-pointer pb-6'>
-                            <span><ShoppingCartIcon className='h-6 w-6' /></span>
-                            <span className='flex p-2 items-center justify-center absolute -top-1 left-4 text-xs text-center text-white bg-black font-medium border-black rounded-full w-3 h-3'>
-                                <span>0</span>
-                            </span>
+                            <div onClick={()=>onCartClick()}>
+                                <span><ShoppingCartIcon className='h-6 w-6' /></span>
+                                <span className='flex p-2 items-center justify-center absolute -top-1 left-4 text-xs text-center text-white bg-black font-medium border-black rounded-full w-3 h-3'>
+                                    <span>0</span>
+                                </span>
+                            </div>
                         </li>
                     </ul>
                 </div>
