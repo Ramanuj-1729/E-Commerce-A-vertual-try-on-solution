@@ -22,6 +22,7 @@ module.exports = {
       fadeFont: "#484848",
       red: "#d9121f",
       hoverRed: "#e82e3b",
+      lightBlack: "#222222"
     },
     screens: {
       'smallPhone': '320px', // Phone - portrait

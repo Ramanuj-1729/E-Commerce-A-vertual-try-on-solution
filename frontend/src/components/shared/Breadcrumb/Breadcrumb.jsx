@@ -1,10 +1,10 @@
 import { NavLink } from 'react-router-dom';
 
-const Breadcrumb = () => {
+const Breadcrumb = ({currPage}) => {
     return (
 
-        <nav className="flex mb-4 mx-12" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3 py-2">
+        <nav className="flex mx-12" aria-label="Breadcrumb">
+            <ol className="inline-flex items-center space-x-1 md:space-x-3">
                 <li className="inline-flex items-center text-gray">
                     <NavLink to="/" className="inline-flex items-center text-sm">
                         <svg className="w-3 h-3 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -19,7 +19,7 @@ const Breadcrumb = () => {
                         <svg className="w-3 h-3 text-gray-400 mx-1 text-gray" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
                         </svg>
-                        <span to="#" className="ml-1 text-sm font-medium">Projects</span>
+                        <span to="#" className="ml-1 text-sm font-medium">{currPage}</span>
                     </div>
                 </li>
             </ol>

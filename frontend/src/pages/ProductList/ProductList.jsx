@@ -9,7 +9,9 @@ const ProductList = () => {
     const [gridCols, setGridCols] = useState(3);
     return (
         <div className='mt-4 mb-10'>
-            <Breadcrumb />
+            <div className='mt-5 mb-10'>
+                <Breadcrumb currPage="Products" />
+            </div>
             <div className='mx-12 flex'>
                 <div className='flex flex-col mr-10'>
                     <div className='flex items-center justify-between mb-10'>

@@ -28,7 +28,7 @@ const Cart = ({onCloseClick, toggleCart}) => {
         
     ]
     return (
-        <div style={toggleCart === true ? {right: '0'} : {right: '-100%'}} className='fixed top-0 bg-white h-screen z-30 flex items-center flex-col px-8 py-8'>
+        <div style={toggleCart === true ? {right: '0'} : {right: '-100%'}} className='fixed top-0 bg-white h-screen z-30 flex items-center flex-col px-8 py-8 duration-500 ease-out'>
             <div className='flex items-center justify-center border-b-[1px] border-gray space-x-28 pb-5 w-full'>
                 <h2 className='font-semibold text-xl'>SHOPPING CART</h2>
                 <button onClick={()=>onCloseClick()} className='flex items-center justify-center font-semibold text-lg text-gray'><small>close</small> <ArrowRightIcon className='w-5 h-5 ml-2' /></button>
