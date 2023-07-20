@@ -35,7 +35,7 @@ const Cart = ({onCloseClick, toggleCart}) => {
             </div>
             <div className='my-5 w-full'>
                 <div className='mb-5 flow-root overflow-auto max-h-96 pr-3'>
-                    <ul className=" divide-y divide-gray-200">
+                    <ul className="divide-y divide-gray-200">
                         {products.map((product) => (
                             <li key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
@@ -78,7 +78,7 @@ const Cart = ({onCloseClick, toggleCart}) => {
                     <span className='font-semibold text-lg'>$841.99</span>
                 </div>
                 <div className='flex items-center justify-center flex-col'>
-                    <NavLink className=" font-medium text-2xl border-b-2 border-red pb-2 mb-5" to="">View Cart</NavLink>
+                    <NavLink to="/cart" className=" font-medium text-2xl border-b-2 border-red pb-2 mb-5">View Cart</NavLink>
                     <button className='bg-black text-white py-3 w-full rounded text-xl font-medium'>Checkout</button>
                 </div>
             </div>

@@ -7,6 +7,8 @@ import ProductList from './pages/ProductList/ProductList';
 import Account from './pages/Account/Account';
 import Login from './pages/Login/Login';
 import Collections from './pages/Collections/Collections';
+import Cart from './pages/Cart/Cart';
+import Wishlist from './pages/Wishlist/Wishlist';
 
 const App = () => {
   return (
@@ -19,6 +21,8 @@ const App = () => {
         <Route path="account" element={<Account />}>
           <Route path='login' element={<Login />} />
         </Route>
+        <Route path='cart' element={<Cart />} />
+        <Route path='wishlist' element={<Wishlist />} />
       </Routes>
       <Footer />
     </Router>

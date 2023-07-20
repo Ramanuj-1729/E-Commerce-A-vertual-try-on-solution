@@ -10,7 +10,6 @@ const Navbar = () => {
     const navigate = useNavigate();
     const [toggleCart, setToggleCart] = useState(false);
     const onCartClick = () => {
-        console.log(toggleCart);
         setToggleCart(current => !current); 
     }
 
@@ -212,7 +211,7 @@ const Navbar = () => {
                     <ul className='flex items-center space-x-5'>
                         <li className='pb-6'><MagnifyingGlassIcon className='h-6 w-6 cursor-pointer' /></li>
                         <li onClick={login === true ? ()=>navigate('/account') : ()=>navigate('/account/login')} className='pb-6'><UserIcon className='h-6 w-6 cursor-pointer' /></li>
-                        <li className='pb-6'><HeartIcon className='h-6 w-6 cursor-pointer' /></li>
+                        <li onClick={()=>navigate('/wishlist')} className='pb-6'><HeartIcon className='h-6 w-6 cursor-pointer' /></li>
                         <li className='relative cursor-pointer pb-6'>
                             <div onClick={()=>onCartClick()}>
                                 <span><ShoppingCartIcon className='h-6 w-6' /></span>
