@@ -9,6 +9,7 @@ import Login from './pages/Login/Login';
 import Collections from './pages/Collections/Collections';
 import Cart from './pages/Cart/Cart';
 import Wishlist from './pages/Wishlist/Wishlist';
+import SingleProduct from './pages/SingleProduct/SingleProduct';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="collections" element={<Collections />} />
         <Route path='collections/all' element={<ProductList />} />
+        <Route path='collections/single-product' element={<SingleProduct />} />
         <Route path="account" element={<Account />}>
           <Route path='login' element={<Login />} />
         </Route>

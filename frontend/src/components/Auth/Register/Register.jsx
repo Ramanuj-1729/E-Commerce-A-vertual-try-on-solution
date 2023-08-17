@@ -1,5 +1,5 @@
 import Input from '../../shared/Input/Input'
-import Checkbox from '../../Checkbox/Checkbox'
+import Checkbox from '../../shared/Checkbox/Checkbox';
 
 const Register = () => {
   return (

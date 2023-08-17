@@ -1,6 +1,6 @@
 import { } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
-import FeatureBar from '../../FeatureBar/FeatureBar';
+import FeatureBar from './FeatureBar/FeatureBar';
 const Footer = () => {
     return (
         <div className='mx-12'>
@@ -42,7 +42,7 @@ const Footer = () => {
                 </div>
 
                 <div className='basis-1/2'>
-                    <h1 className='font-medium text-4xl mb-5'>Join our newsletter and get $20 for your first order</h1>
+                    <h1 className='font-medium text-4xl mb-5'>Join our newsletter and get $20 off your first order</h1>
 
                     <div className='flex items-center justify-center mb-10'>
                         <input className='border-[1px] border-gray px-5 py-4 rounded-full w-full mr-5' type="text" name="" id="" placeholder='Email address' />

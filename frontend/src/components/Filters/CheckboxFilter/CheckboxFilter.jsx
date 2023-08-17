@@ -1,4 +1,4 @@
-import Checkbox from '../../Checkbox/Checkbox';
+import Checkbox from '../../shared/Checkbox/Checkbox';
 
 const CheckboxFilter = ({label, value}) => {
     return (
