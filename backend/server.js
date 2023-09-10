@@ -20,6 +20,7 @@ global.appRoot = path.resolve(__dirname);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-app.use('/api', routes);
+app.use('/api/v1', routes);
+app.get('/', (req, res) => res.send('Hello World!'));
 
 app.listen(APP_PORT, () => console.log(`Listening on port ${APP_PORT} ...`));

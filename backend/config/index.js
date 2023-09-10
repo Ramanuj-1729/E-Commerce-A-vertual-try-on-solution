@@ -5,6 +5,6 @@ module.exports = {
     APP_PORT,
     DB_URL,
     DEBUG_MODE,
-    JWT_SECRET,
+    ACCESS_JWT_SECRET,
     REFRESH_JWT_SECRET,
 } = process.env;
