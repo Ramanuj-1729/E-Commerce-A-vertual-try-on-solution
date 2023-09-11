@@ -7,20 +7,20 @@ const TokenService = require('../../services/TokenService');
 const registerController = {
     async register(req, res, next) {
         // Validate user input
-        const userSchema = Joi.object({
+        const registerSchema = Joi.object({
             firstName: Joi.string().min(3).max(30).required(),
             lastName: Joi.string().min(3).max(30).required(),
             email: Joi.string().email().required(),
             password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
         });
-        const { error } = userSchema.validate(req.body);
+        const { error } = registerSchema.validate(req.body);
         if (error) {
             return next(error);
         }
 
         // Check if user already exists in database
         try {
-            const exist = await User.findOne({ email: req.body.email });
+            const exist = await User.exists({ email: req.body.email });
             if (exist) {
                 return next(CustomErrorHandler.alreadyExist('This email is already taken.'));
             }

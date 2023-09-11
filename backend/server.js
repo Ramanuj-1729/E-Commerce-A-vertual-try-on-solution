@@ -1,6 +1,7 @@
 const { APP_PORT, DB_URL } = require('./config');
 const express = require('express');
 const mongoose = require('mongoose');
+const errorHadler = require('./middlewares/errorHandler');
 const path = require('path');
 const cors = require('cors');
 const routes = require('./routes');
@@ -21,6 +22,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use('/api/v1', routes);
-app.get('/', (req, res) => res.send('Hello World!'));
 
+app.use(errorHadler);
 app.listen(APP_PORT, () => console.log(`Listening on port ${APP_PORT} ...`));
