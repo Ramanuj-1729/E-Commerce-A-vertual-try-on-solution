@@ -12,6 +12,7 @@ const registerController = {
             lastName: Joi.string().min(3).max(30).required(),
             email: Joi.string().email().required(),
             password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+            isAdmin: Joi.boolean().default(false),
         });
         const { error } = registerSchema.validate(req.body);
         if (error) {
@@ -29,7 +30,7 @@ const registerController = {
         }
 
         // Create new user
-        const { firstName, lastName, email, password } = req.body;
+        const { firstName, lastName, email, password, isAdmin } = req.body;
 
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -39,6 +40,7 @@ const registerController = {
             lastName,
             email,
             password: hashedPassword,
+            isAdmin,
         });
 
         //Save user to database and generate token
@@ -46,7 +48,7 @@ const registerController = {
         let refresh;
         try {
             const result = await user.save();
-            const {accessToken, refreshToken} = await TokenService.generateTokens({ _id: result._id, });
+            const {accessToken, refreshToken} = TokenService.generateTokens({ _id: result._id, });
             access = accessToken;
             refresh = refreshToken;
             await TokenService.storeRefreshToken(refresh, result._id);
