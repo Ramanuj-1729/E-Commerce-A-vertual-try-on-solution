@@ -3,6 +3,7 @@ const CustomErrorHandler = require('../../services/CustomErrorHandler');
 const multer = require('multer');
 const fs = require('fs');
 const Category = require('../../models/category');
+const { default: mongoose } = require('mongoose');
 
 const FILE_TYPE_MAP = {
     'image/png': 'png',
@@ -82,6 +83,41 @@ const productController = {
 
             res.status(201).json(productDocument);
         })
+    },
+
+    async updateProductImages(req, res, next) {
+        handleMultipartData.array('images', 5)(req, res, async (err) => {
+            if (err) {
+                return next(CustomErrorHandler.serverError(err.message));
+            }
+
+            if (!mongoose.isValidObjectId(req.params.id)) {
+                return next(CustomErrorHandler.notFound('Invalid Product Id!'));
+            }
+
+            const files = req.files;
+            let imagesPaths = [];
+
+            if (files) {
+                files.map(file => {
+                    imagesPaths.push(file.path);
+                });
+            }
+
+            const product = await Product.findByIdAndUpdate(
+                req.params.id,
+                {
+                    images: imagesPaths,
+                },
+                { new: true },
+            );
+
+            if (!product) {
+                return next(CustomErrorHandler.notFound('Product not found!'));
+            }
+
+            res.status(200).json(product);
+        });
     }
 }
 

@@ -9,4 +9,6 @@ router.post('/categories', categoryController.createCategory);
 router.post('/addresses', addressController.createAddress);
 router.post('/orders', orderController.createOrder);
 
+router.put('/product-images/:id', productController.updateProductImages);
+
 module.exports = router;
