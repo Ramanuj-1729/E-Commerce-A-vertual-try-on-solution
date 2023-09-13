@@ -1,10 +1,8 @@
 const Product = require('../../models/product');
 const CustomErrorHandler = require('../../services/CustomErrorHandler');
 const multer = require('multer');
-const path = require('path');
 const fs = require('fs');
 const Category = require('../../models/category');
-const { log } = require('console');
 
 const FILE_TYPE_MAP = {
     'image/png': 'png',
