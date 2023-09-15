@@ -30,7 +30,7 @@ const loginController = {
             }
 
             // Generate tokens
-            const { accessToken, refreshToken } = await TokenService.generateTokens({ _id: user._id, });
+            const { accessToken, refreshToken } = TokenService.generateTokens({ _id: user._id, isAdmin: user.isAdmin });
             await TokenService.storeRefreshToken(refreshToken, user._id);
             res.json({ accessToken, refreshToken });
         } catch (error) {

@@ -48,7 +48,7 @@ const registerController = {
         let refresh;
         try {
             const result = await user.save();
-            const {accessToken, refreshToken} = TokenService.generateTokens({ _id: result._id, });
+            const {accessToken, refreshToken} = TokenService.generateTokens({ _id: result._id, isAdmin: result.isAdmin });
             access = accessToken;
             refresh = refreshToken;
             await TokenService.storeRefreshToken(refresh, result._id);
