@@ -15,7 +15,6 @@ const userAuth = async (req, res, next) => {
             _id,
             isAdmin
         }
-        console.log(user);
         req.user = user;
         next();
 

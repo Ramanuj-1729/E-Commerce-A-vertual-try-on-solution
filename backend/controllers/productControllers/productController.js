@@ -118,6 +118,33 @@ const productController = {
 
             res.status(200).json(product);
         });
+    },
+
+    async getProducts(req, res, next) {
+        let productList;
+
+        try {
+            productList = await Product.find().populate('category');
+        } catch (error) {
+            return next(CustomErrorHandler.serverError());
+        }
+        res.send(productList);
+    },
+
+    async getProduct(req, res, next) {
+        let product;
+
+        try {
+            product = await Product.findById(req.params.id).populate('category');
+        } catch (error) {
+            return next(CustomErrorHandler.serverError());
+        }
+
+        if (!product) {
+            return next(CustomErrorHandler.notFound('Product not found!'));
+        }
+
+        res.send(product);
     }
 }
 

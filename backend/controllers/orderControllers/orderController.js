@@ -17,8 +17,6 @@ const orderController = {
 
         const orderItemsIdsResolved = await orderItemsIds;
 
-        console.log(orderItemsIdsResolved);
-
         const totalAmounts = await Promise.all(orderItemsIdsResolved.map(async (orderItemId) => {
             const orderItem = await OrderItem.findById(orderItemId).populate('product', 'price');
             const totalAmount = orderItem.product.price * orderItem.quantity;
