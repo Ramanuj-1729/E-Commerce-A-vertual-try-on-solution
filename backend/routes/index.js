@@ -23,6 +23,10 @@ router.delete('/products/:id', adminAuth, productController.deleteProduct);
 
 // Category Routes
 router.post('/categories', adminAuth, categoryController.createCategory);
+router.get('/categories', userAuth, categoryController.getAllCategories);
+router.get('/categories/:id', userAuth, categoryController.getCategory);
+router.put('/categories/:id', adminAuth, categoryController.updateCategory);
+router.delete('/categories/:id', adminAuth, categoryController.deleteCategory);
 
 // Order Routes
 router.post('/orders', userAuth, orderController.createOrder);
