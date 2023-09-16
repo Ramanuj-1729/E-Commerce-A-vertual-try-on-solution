@@ -3,7 +3,7 @@ const CustomErrorHandler = require('../../services/CustomErrorHandler');
 const multer = require('multer');
 const fs = require('fs');
 const Category = require('../../models/category');
-const { default: mongoose } = require('mongoose');
+const mongoose = require('mongoose');
 
 const FILE_TYPE_MAP = {
     'image/png': 'png',
@@ -85,6 +85,41 @@ const productController = {
         })
     },
 
+    async updateProductImage(req, res, next) {
+        handleMultipartData.single('image')(req, res, async (err) => {
+            if (err) {
+                return next(CustomErrorHandler.serverError(err.message));
+            }
+
+            if (!mongoose.isValidObjectId(req.params.id)) {
+                return next(CustomErrorHandler.notFound('Invalid Product Id!'));
+            }
+
+            const file = req.file;
+
+            if (!file) return next(CustomErrorHandler.notFound('Please upload a file!'));
+
+            const product = await Product.findByIdAndUpdate(
+                req.params.id,
+                {
+                    image: file.path,
+                },
+                { new: true },
+            );
+
+            if (!product) {
+                fs.unlink(`${appRoot}/${file.path}`, (err) => {
+                    if (err) {
+                        return next(CustomErrorHandler.serverError(err.message));
+                    }
+                });
+                return next(CustomErrorHandler.notFound('Product not found!'));
+            }
+
+            res.status(200).json(product);
+        });
+    },
+
     async updateProductImages(req, res, next) {
         handleMultipartData.array('images', 5)(req, res, async (err) => {
             if (err) {
@@ -145,6 +180,41 @@ const productController = {
         }
 
         res.send(product);
+    },
+
+    async updateProduct(req, res, next) {
+        if (!mongoose.isValidObjectId(req.params.id)) {
+            return next(CustomErrorHandler.notFound('Invalid Product Id!'));
+        }
+
+        const _category = await Category.findById(req.body.category);
+        if (!_category) {
+            return next(CustomErrorHandler.notFound('Category not found!'));
+        }
+
+        const { name, description, colors, sizes, brand, price, category, countInStock, rating, numReviews, isFeatured } = req.body;
+
+        let updatedProduct;
+
+        try {
+            updatedProduct = await Product.findByIdAndUpdate(
+                req.params.id,
+                req.body,
+                { new: true },
+            );
+        } catch (error) { }
+    },
+
+    async deleteProduct(req, res, next) {
+        Product.findByIdAndRemove(req.params.id).then((product) => {
+            if (product) {
+                return res.status(200).json({ success: true, message: 'Product successfully removed!' });
+            } else {
+                return res.status(404).json({ success: false, message: 'Product not found!' });
+            }
+        }).catch((err) => {
+            return res.status(500).json({ success: false, error: err });
+        });
     }
 }
 
