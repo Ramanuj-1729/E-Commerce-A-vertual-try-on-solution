@@ -33,7 +33,7 @@ const userController = {
 
         let newPassword;
         if(req.body.password){
-            newPassword = await bcrypt.hashSync(req.body.password, 10);
+            newPassword = bcrypt.hashSync(req.body.password, 10);
         } else {
             newPassword = user.password;
         }
