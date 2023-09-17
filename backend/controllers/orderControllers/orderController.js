@@ -43,6 +43,56 @@ const orderController = {
         }
 
         res.status(201).json(OrderDocument);
+    },
+
+    async getOrders(req, res, next) {
+        let orders;
+
+        try {
+            orders = await Order.find().populate('user', 'name').sort({'-createdAt': -1});
+        } catch (error) {
+            return next(error);
+        }
+
+        res.status(200).json(orders);
+    },
+
+    async getOrder(req, res, next) {
+        let order;
+
+        try {
+            order = await Order.findById(req.params.id).populate('user', 'name').populate({path: 'orderItems', populate: {path: 'product', populate: 'category'}});
+        } catch (error) {
+            return next(error);
+        }
+
+        res.status(200).json(order);
+    },
+
+    async updateOrder(req, res, next) {
+        const { status } = req.body;
+
+        let orderDocument;
+
+        try {
+            orderDocument = await Order.findByIdAndUpdate(req.params.id, { status }, { new: true });
+        } catch (error) {
+            return next(error);
+        }
+
+        res.status(200).json(orderDocument);
+    },
+
+    async deleteOrder(req, res, next) {
+        Order.findByIdAndRemove(req.params.id).then((order) => {
+            if (order) {
+                return res.status(200).json({ success: true, message: 'Order successfully removed!' });
+            } else {
+                return res.status(404).json({ success: false, message: 'Order not found!' });
+            }
+        }).catch((err) => {
+            return res.status(500).json({ success: false, error: err });
+        });
     }
 }
 

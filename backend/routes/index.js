@@ -29,6 +29,10 @@ router.delete('/categories/:id', adminAuth, categoryController.deleteCategory);
 
 // Order Routes
 router.post('/orders', userAuth, orderController.createOrder);
+router.get('/orders', userAuth, orderController.getOrders);
+router.get('/orders/:id', userAuth, orderController.getOrder);
+router.put('/orders/:id', userAuth, orderController.updateOrder);
+router.delete('/orders/:id', userAuth, orderController.deleteOrder);
 
 // Address Routes
 router.post('/addresses', userAuth, addressController.createAddress);
