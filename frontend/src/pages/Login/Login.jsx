@@ -12,7 +12,7 @@ const Login = () => {
             </div>
             <div className='w-full'>
                 {
-                    type === 'signin' ? <Signin /> : <Register />
+                    type === 'signin' ? <Signin /> : <Register type={setType} />
                 }
             </div>
         </div>

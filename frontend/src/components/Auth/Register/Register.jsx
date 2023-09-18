@@ -3,7 +3,7 @@ import Input from '../../shared/Input/Input'
 import Checkbox from '../../shared/Checkbox/Checkbox';
 import { register } from '../../../http';
 
-const Register = () => {
+const Register = ({type}) => {
   const [user, setUser] = useState({
     firstName: '',
     lastName: '',
@@ -20,9 +20,9 @@ const Register = () => {
     e.preventDefault();
     try {
       const { data } = await register(user);
-      console.log(data);
+      type('signin');
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.message);
     }
   }
   return (
