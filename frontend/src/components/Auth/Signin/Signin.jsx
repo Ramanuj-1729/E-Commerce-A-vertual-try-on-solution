@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import Input from '../../shared/Input/Input';
 import { login } from '../../../http';
 import { useDispatch } from 'react-redux';
@@ -12,6 +12,7 @@ const Signin = () => {
     });
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -22,8 +23,8 @@ const Signin = () => {
         e.preventDefault();
         try {
             const { data } = await login(user);
-            console.log(data);
             dispatch(setAuth(data));
+            navigate(`/account/${data.user}`);
         } catch (error) {
             console.log(error.response.data.message);
         } 

@@ -4,10 +4,11 @@ import { MagnifyingGlassIcon, UserIcon, HeartIcon, ShoppingCartIcon, ChevronDown
 import Dropdown from '../../Dropdown/Dropdown';
 import NavCategories from '../../NavCategories/NavCategories';
 import Cart from '../../Cart/Cart';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
-    const login = false;
     const navigate = useNavigate();
+    const { isAuth, user } = useSelector(state => state.authSlice);
     const [toggleCart, setToggleCart] = useState(false);
     const onCartClick = () => {
         setToggleCart(current => !current); 
@@ -210,7 +211,7 @@ const Navbar = () => {
                 <div>
                     <ul className='flex items-center space-x-5'>
                         <li className='pb-6'><MagnifyingGlassIcon className='h-6 w-6 cursor-pointer' /></li>
-                        <li onClick={login === true ? ()=>navigate('/account') : ()=>navigate('/account/login')} className='pb-6'><UserIcon className='h-6 w-6 cursor-pointer' /></li>
+                        <li onClick={isAuth ? ()=>navigate(`/account/${user}`) : ()=>navigate('/account/login')} className='pb-6'><UserIcon className='h-6 w-6 cursor-pointer' /></li>
                         <li onClick={()=>navigate('/wishlist')} className='pb-6'><HeartIcon className='h-6 w-6 cursor-pointer' /></li>
                         <li className='relative cursor-pointer pb-6'>
                             <div onClick={()=>onCartClick()}>
