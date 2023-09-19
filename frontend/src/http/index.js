@@ -5,12 +5,14 @@ const api = axios.create({
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': localStorage.getItem('accessToken')
     },
 });
 
 //list of all the api calls
 export const register = (user) => api.post('/register', user);
 export const login = (user) => api.post('/login', user);
+export const getProducts = () => api.get('/products');
 
 export default api;

@@ -1,12 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import { Bars3BottomRightIcon, HeartIcon, MagnifyingGlassIcon, StarIcon } from '@heroicons/react/24/outline';
 
-const SingleProductCard = () => {
+const SingleProductCard = ({product}) => {
+    console.log(product);
+    const PF = 'http://localhost:5000/'
     return (
         <div className='group'>
             <div className='relative mb-3'>
                 <div className='flex items-center justify-center bg-gray cursor-pointer aspect-h-1 aspect-w-1 overflow-hidden'>
-                    <img className='h-full w-full object-cover object-center' src="/images/p1.png" alt="" />
+                    <img className='h-full w-full object-cover object-center' src={PF + product?.image} alt="" />
                 </div>
                 <span className='absolute top-3 left-3 bg-white rounded-xl text-xs py-1 px-2 font-medium'>20% OFF</span>
                 <div className='absolute top-2 right-2 hidden flex-col space-y-1 group-hover:flex'>
@@ -17,10 +19,10 @@ const SingleProductCard = () => {
                 <button className='absolute bottom-0 bg-black w-full text-white py-3 hidden group-hover:block duration-200 ease-in'>Add to cart</button>
             </div>
 
-            <span><NavLink to="#">Canon EOS 5D</NavLink></span>
+            <span><NavLink to="#">{product?.name}</NavLink></span>   
 
             <div className='my-2'>
-                <span className='text-lg mr-4'>$98.00</span>
+                <span className='text-lg mr-4'>${product?.price} </span>
                 <span className='text-lg text-gray line-through'>$122.00</span>
             </div>
 
@@ -40,7 +42,7 @@ const SingleProductCard = () => {
                     <img className='h-8' src="/images/cat-1.png" alt="" />
                 </button>
             </div>
-        </div>
+        </div> 
     );
 }
 

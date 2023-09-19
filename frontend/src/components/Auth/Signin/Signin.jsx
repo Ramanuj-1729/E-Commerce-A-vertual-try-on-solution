@@ -23,6 +23,7 @@ const Signin = () => {
         e.preventDefault();
         try {
             const { data } = await login(user);
+            localStorage.setItem("accessToken", "Bearer " + data.accessToken);
             dispatch(setAuth(data));
             navigate(`/account/${data.user}`);
         } catch (error) {
