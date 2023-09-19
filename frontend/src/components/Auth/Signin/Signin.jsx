@@ -2,12 +2,16 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom'
 import Input from '../../shared/Input/Input';
 import { login } from '../../../http';
+import { useDispatch } from 'react-redux';
+import { setAccessToken } from '../../../store/accessTokenSlice';
 
 const Signin = () => {
     const [user, setUser] = useState({
         email: '',
         password: ''
     });
+
+    const dispatch = useDispatch();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -18,7 +22,7 @@ const Signin = () => {
         e.preventDefault();
         try {
             const { data } = await login(user);
-            console.log(data);
+            dispatch(setAccessToken(data.accessToken));
         } catch (error) {
             console.log(error.response.data.message);
         } 

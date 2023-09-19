@@ -43,21 +43,19 @@ const registerController = {
             isAdmin,
         });
 
-        //Save user to database and generate token
-        let access;
-        let refresh;
+        let userDocument;
         try {
-            const result = await user.save();
-            const {accessToken, refreshToken} = TokenService.generateTokens({ _id: result._id, isAdmin: result.isAdmin });
-            access = accessToken;
-            refresh = refreshToken;
-            await TokenService.storeRefreshToken(refresh, result._id);
+            userDocument = await user.save();
+
+            if(!userDocument) {
+                return next(CustomErrorHandler.serverError());
+            }
         } catch (error) {
             return next(error);
         }
 
         // Send response
-        res.json({ access, refresh });
+        res.json(userDocument);
     }
 }
 
