@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { Bars3BottomRightIcon, HeartIcon, MagnifyingGlassIcon, StarIcon } from '@heroicons/react/24/outline';
 
-const SingleProductCard = ({product}) => {
+const SingleProductCard = ({ product }) => {
     console.log(product);
     const PF = 'http://localhost:5000/'
     return (
@@ -19,7 +19,7 @@ const SingleProductCard = ({product}) => {
                 <button className='absolute bottom-0 bg-black w-full text-white py-3 hidden group-hover:block duration-200 ease-in'>Add to cart</button>
             </div>
 
-            <span><NavLink to="#">{product?.name}</NavLink></span>   
+            <span><NavLink to="#">{product?.name}</NavLink></span>
 
             <div className='my-2'>
                 <span className='text-lg mr-4'>${product?.price} </span>
@@ -35,14 +35,17 @@ const SingleProductCard = ({product}) => {
             </span>
 
             <div className='flex items-center space-x-2 mt-2'>
-                <button className='h-8 w-8 bg-gray rounded-full flex items-center justify-center overflow-hidden'>
-                    <img className='h-8' src="/images/cat-1.png" alt="" />
-                </button>
-                <button className='h-8 w-8 bg-gray rounded-full flex items-center justify-center overflow-hidden'>
-                    <img className='h-8' src="/images/cat-1.png" alt="" />
-                </button>
+                {
+                    product?.images?.map((image, index) => {
+                        return (
+                            <button key={index} className='h-8 w-8 bg-gray rounded-full flex items-center justify-center overflow-hidden'>
+                                <img className='h-8' src={PF + image} alt="" />
+                            </button>
+                        );
+                    })
+                }
             </div>
-        </div> 
+        </div>
     );
 }
 

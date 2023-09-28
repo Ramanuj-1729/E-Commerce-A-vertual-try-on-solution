@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FilterTemplate from './FilterTemplate/FilterTemplate';
 import Slider from '@mui/material/Slider';
 import CheckboxFilter from './CheckboxFilter/CheckboxFilter';
+import { getCategories } from '../../http';
 
 const Filters = () => {
     const [value, setValue] = useState([0, 10000]);
@@ -9,15 +10,31 @@ const Filters = () => {
     const handleChange = (event, newPrice) => {
         setValue(newPrice);
     };
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const { data } = await getCategories();
+                setCategories(data);
+                setLoading(false);
+            } catch (error) {
+                console.log(error.response.data.message);
+            }
+        }
+        fetchUsers();
+    }, []);
     return (
         <div className='w-80'>
             <FilterTemplate heading="All Categories">
                 <ul className='space-y-2 font-medium text-lg'>
-                    <li>Jeans</li>
-                    <li>Suits</li>
-                    <li>T-Shirts</li>
-                    <li>Jeans</li>
-                    <li>Jeans</li>
+                    {loading ? <h1>Loading...</h1> :
+                        categories.map((category) => {
+                            return (
+                                <li key={category._id}>{category.name}</li>
+                            )
+                        })
+                    }
                 </ul>
             </FilterTemplate>
 

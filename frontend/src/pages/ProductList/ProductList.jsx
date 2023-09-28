@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SingleProductCard from '../../components/shared/SingleProductCard/SingleProductCard';
 import Breadcrumb from '../../components/shared/Breadcrumb/Breadcrumb';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import Filters from '../../components/Filters/Filters';
 import Pagination from '../../components/shared/Pagination/Pagination';
+import { getProducts } from '../../http';
 
 const ProductList = () => {
     const [gridCols, setGridCols] = useState(3);
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const { data } = await getProducts();
+                setProducts(data);
+                setLoading(false);
+            } catch (error) {
+                console.log(error.response.data.message);
+            }
+        }
+        fetchUsers();
+    }, []);
     return (
         <div className='mt-4 mb-10'>
             <div className='mt-5 mb-10'>
@@ -45,13 +60,13 @@ const ProductList = () => {
                     </div>
                     <div className='flex items-center justify-center flex-col'>
                         <div style={{ gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))` }} className='grid gap-8'>
-                            <SingleProductCard />
-                            <SingleProductCard />
-                            <SingleProductCard />
-                            <SingleProductCard />
-                            <SingleProductCard />
-                            <SingleProductCard />
-                            <SingleProductCard />
+                            {loading ? <h1>Loading...</h1> :
+                                products.map((product) => {
+                                    return (
+                                        <SingleProductCard key={product._id} product={product} />
+                                    )
+                                })
+                            }
                         </div>
                         <Pagination />
                     </div>
