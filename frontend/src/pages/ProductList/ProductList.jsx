@@ -11,7 +11,7 @@ const ProductList = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchProducts = async () => {
             try {
                 const { data } = await getProducts();
                 setProducts(data);
@@ -20,7 +20,7 @@ const ProductList = () => {
                 console.log(error.response.data.message);
             }
         }
-        fetchUsers();
+        fetchProducts();
     }, []);
     return (
         <div className='mt-4 mb-10'>

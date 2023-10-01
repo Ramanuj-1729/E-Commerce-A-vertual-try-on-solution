@@ -14,8 +14,8 @@ router.delete('/users/:id', userAuth, userController.deleteUser);
 
 // Product Routes
 router.post('/products', adminAuth, productController.createProdcut);
-router.get('/products', userAuth, productController.getProducts);
-router.get('/products/:id', userAuth, productController.getProduct);
+router.get('/products', productController.getProducts);
+router.get('/products/:id', productController.getProduct);
 router.put('/product-image/:id', adminAuth, productController.updateProductImage);
 router.put('/product-images/:id', adminAuth, productController.updateProductImages);
 router.delete('/products/:id', adminAuth, productController.deleteProduct);

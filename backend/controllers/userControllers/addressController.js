@@ -59,7 +59,7 @@ const addressController = {
         let addressDocument;
 
         try {
-            addressDocument = await Address.findById(req.params.id);
+            addressDocument = await Address.find({ user: req.params.id });
         } catch (error) {
             return next(error);
         }

@@ -10,8 +10,8 @@ import Collections from './pages/Collections/Collections';
 import Cart from './pages/Cart/Cart';
 import Wishlist from './pages/Wishlist/Wishlist';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
+import AccountPage from './components/AccountPage/AccountPage';
 import { useSelector } from 'react-redux';
-import Dashboard from './components/Dashboard/Dashboard';
 
 const App = () => {
   const { isAuth, user } = useSelector(state => state.authSlice);
@@ -26,7 +26,7 @@ const App = () => {
         <Route path='collections/single-product' element={<SingleProduct />} />
         {isAuth ?
           <Route path="account" element={<Account />}>
-            <Route path={`/account/${user}`} element={<Dashboard />} />
+            <Route path={`/account/${user}`} element={<AccountPage />} />
           </Route>
           :
           <Route path="account" element={<Account />}>

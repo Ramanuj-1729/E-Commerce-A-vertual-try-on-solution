@@ -2,7 +2,6 @@ import { NavLink } from 'react-router-dom';
 import { Bars3BottomRightIcon, HeartIcon, MagnifyingGlassIcon, StarIcon } from '@heroicons/react/24/outline';
 
 const SingleProductCard = ({ product }) => {
-    console.log(product);
     const PF = 'http://localhost:5000/'
     return (
         <div className='group'>
