@@ -3,7 +3,6 @@ import Breadcrumb from '../shared/Breadcrumb/Breadcrumb';
 import Dashboard from './Dashboard/Dashboard';
 import Orders from './Orders/Orders';
 import Addresses from './Addresses/Addresses';
-import { useSelector } from 'react-redux';
 import { getUser } from '../../http';
 import { useDispatch } from 'react-redux';
 import { clearAuth } from '../../store/authSlice';
@@ -13,9 +12,9 @@ const AccountPage = () => {
     const [activeTab, setActiveTab] = useState('dashboard');
     const [userData, setUserData] = useState({});
     const [loading, setLoading] = useState(true);
-    const { user } = useSelector(state => state.authSlice);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [forceRerender, setForceRerender] = useState(false);
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
@@ -23,7 +22,7 @@ const AccountPage = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const { data } = await getUser(user);
+                const { data } = await getUser(window.location.pathname.split('/')[2]);
                 setUserData(data);
                 setLoading(false);
             } catch (error) {
@@ -31,12 +30,12 @@ const AccountPage = () => {
             }
         }
         fetchUsers();
-    }, [user]);
+    }, [forceRerender]);
 
     const handleLogout = () => {
         localStorage.removeItem('accessToken');
         dispatch(clearAuth());
-        navigate('/');
+        navigate('/account/login');
     };
     
     return (
@@ -53,7 +52,7 @@ const AccountPage = () => {
                     </div>
                 </div>
                 <div className='flex my-3 border-y-[2px] border-gray py-3'>
-                    <ul className='space-y-3 text-black bg-[#f7f7f7]'>
+                    <ul className='h-fit space-y-3 text-black bg-[#f7f7f7]'>
                         <li className='border-b-[2px] border-gray pt-3'>
                             <button onClick={() => handleTabChange('dashboard')} className={`flex items-center mb-3 p-3 w-60 space-x-5 hover:bg-red hover:text-white ${activeTab === 'dashboard' ? 'bg-red text-white' : 'text-black'}`}>
                                 <img className='w-5 h-5' src="/images/dashboard.png" alt="dashboard" />
@@ -79,7 +78,7 @@ const AccountPage = () => {
                             </button>
                         </li>
                     </ul>
-                    {activeTab === 'dashboard' && <Dashboard user={userData} />}
+                    {activeTab === 'dashboard' && <Dashboard user={userData} forceRerender={setForceRerender} />}
                     {activeTab === 'orders' && <Orders />}
                     {activeTab === 'addresses' && <Addresses />}
                 </div>

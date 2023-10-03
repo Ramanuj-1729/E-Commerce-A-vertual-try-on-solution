@@ -1,6 +1,30 @@
+import { useState } from "react";
 import InfoWrapper from "../InfoWrapper/InfoWrapper";
+import { updateUser } from "../../../http";
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({ user, forceRerender }) => {
+    const [formActive, setFormActive] = useState(false);
+    const [userData, setUserData] = useState({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+    });
+
+    const handleInputChange = (e) => {
+        setUserData({ ...userData, [e.target.name]: e.target.value });
+    }
+
+    const handleEditSubmit = async (e, id) => {
+        e.preventDefault();
+        try {
+            const res = await updateUser(userData, user._id);
+            setUserData({});
+            setFormActive(false);
+            forceRerender(prev=>!prev);
+        } catch (error) {
+            console.log(error.response.data.message);
+        }
+    }
 
     return (
         <>
@@ -19,7 +43,20 @@ const Dashboard = ({ user }) => {
                         <span className="text-fadeFont">{user.email}</span>
                     </div>
                 </div>
-                <button className='bg-red py-[5px] px-8 cursor-pointer font-medium ease-in duration-200 text-white absolute bottom-5 hover:bg-hoverRed'>Edit</button>
+                <button onClick={() => setFormActive(true)} className='bg-red py-[5px] px-8 cursor-pointer font-medium ease-in duration-200 text-white absolute top-5 right-5 hover:bg-hoverRed'>Edit</button>
+
+                {
+                    formActive
+                    &&
+                    <form className="space-y-3 mt-5">
+                        <h2 className="text-lg font-semibold">Edit Details</h2>
+                        <input name="firstName" value={userData.firstName} onChange={handleInputChange} className="block" type="text" placeholder="First Name" />
+                        <input name="lastName" value={userData.lastName} onChange={handleInputChange} className="block" type="text" placeholder="Last Name" />
+                        <input name="email" value={userData.email} onChange={handleInputChange} className="block" type="text" placeholder="Email" />
+                        <button onClick={handleEditSubmit} className="bg-red py-2 px-8 cursor-pointer font-medium ease-in duration-200 text-white mr-3 hover:bg-hoverRed">Save</button>
+                        <button onClick={() => setFormActive(false)}>Cancle</button>
+                    </form>
+                }
             </InfoWrapper>
         </>
     );

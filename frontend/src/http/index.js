@@ -16,7 +16,10 @@ export const login = (user) => api.post('/login', user);
 export const getProducts = () => api.get('/products');
 export const getCategories = () => api.get('/categories');
 export const getUser = (userId) => api.get(`/users/${userId}`);
+export const updateUser = (user, userId) => api.put(`/users/${userId}`, user);
 export const getAddresses = (userId) => api.get(`/addresses/${userId}`);
 export const deleteAddress = (addressId) => api.delete(`/addresses/${addressId}`);
+export const addAddress = (address) => api.post('/addresses', address);
+export const updateAddress = (address, addressId) => api.put(`/addresses/${addressId}`, address);
 
 export default api;
