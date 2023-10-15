@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { MagnifyingGlassIcon, UserIcon, HeartIcon, ShoppingCartIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import Dropdown from '../../Dropdown/Dropdown';
@@ -9,9 +9,10 @@ import { useSelector } from 'react-redux';
 const Navbar = () => {
     const navigate = useNavigate();
     const { isAuth, user } = useSelector(state => state.authSlice);
+    const { cartTotalQuantity } = useSelector(state => state.cartSlice);
     const [toggleCart, setToggleCart] = useState(false);
     const onCartClick = () => {
-        setToggleCart(current => !current); 
+        setToggleCart(current => !current);
     }
 
     return (
@@ -211,13 +212,13 @@ const Navbar = () => {
                 <div>
                     <ul className='flex items-center space-x-5'>
                         <li className='pb-6'><MagnifyingGlassIcon className='h-6 w-6 cursor-pointer' /></li>
-                        <li onClick={isAuth ? ()=>navigate(`/account/${user}`) : ()=>navigate('/account/login')} className='pb-6'><UserIcon className='h-6 w-6 cursor-pointer' /></li>
-                        <li onClick={()=>navigate('/wishlist')} className='pb-6'><HeartIcon className='h-6 w-6 cursor-pointer' /></li>
+                        <li onClick={isAuth ? () => navigate(`/account/${user}`) : () => navigate('/account/login')} className='pb-6'><UserIcon className='h-6 w-6 cursor-pointer' /></li>
+                        <li onClick={() => navigate('/wishlist')} className='pb-6'><HeartIcon className='h-6 w-6 cursor-pointer' /></li>
                         <li className='relative cursor-pointer pb-6'>
-                            <div onClick={()=>onCartClick()}>
+                            <div onClick={() => onCartClick()}>
                                 <span><ShoppingCartIcon className='h-6 w-6' /></span>
                                 <span className='flex p-2 items-center justify-center absolute -top-1 left-4 text-xs text-center text-white bg-black font-medium border-black rounded-full w-3 h-3'>
-                                    <span>0</span>
+                                    <span>{cartTotalQuantity}</span>
                                 </span>
                             </div>
                         </li>

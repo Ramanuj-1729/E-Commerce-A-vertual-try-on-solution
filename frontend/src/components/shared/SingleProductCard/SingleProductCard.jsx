@@ -1,8 +1,20 @@
 import { NavLink } from 'react-router-dom';
 import { Bars3BottomRightIcon, HeartIcon, MagnifyingGlassIcon, StarIcon } from '@heroicons/react/24/outline';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { addToCart, getTotals } from '../../../store/cartSlice';
 
 const SingleProductCard = ({ product }) => {
-    const PF = 'http://localhost:5000/'
+    const PF = 'http://localhost:5000/';
+    const dispatch = useDispatch();
+    const cart = useSelector((state) => state.cartSlice);
+    useEffect(() => {
+        dispatch(getTotals());
+    }, [cart, dispatch]);
+
+    const handleAddToCart = () => {
+        dispatch(addToCart(product));
+    }
     return (
         <div className='group'>
             <div className='relative mb-3'>
@@ -15,7 +27,7 @@ const SingleProductCard = ({ product }) => {
                     <button className='bg-white rounded-full p-1 hover:bg-black hover:text-white duration-200 ease-in'><Bars3BottomRightIcon className='h-6 w-6 rotate-90' /></button>
                     <button className='bg-white rounded-full p-1 hover:bg-black hover:text-white duration-200 ease-in'><MagnifyingGlassIcon className='h-6 w-6' /></button>
                 </div>
-                <button className='absolute bottom-0 bg-black w-full text-white py-3 hidden group-hover:block duration-200 ease-in'>Add to cart</button>
+                <button onClick={handleAddToCart} className='absolute bottom-0 bg-black w-full text-white py-3 hidden group-hover:block duration-200 ease-in'>Add to cart</button>
             </div>
 
             <span><NavLink to="#">{product?.name}</NavLink></span>
