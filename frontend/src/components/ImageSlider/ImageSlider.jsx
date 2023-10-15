@@ -26,6 +26,7 @@ const activeDotStyle = {
 const ImageSlider = ({ slides }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const imgWrapperRef = useRef(null);
+    const PF = "http://localhost:5000/";
 
     useEffect(() => {
         let imgWrapper = imgWrapperRef.current;
@@ -66,7 +67,7 @@ const ImageSlider = ({ slides }) => {
     };
     const slideStylesWidthBackground = {
         ...slideStyles,
-        backgroundImage: `url(${slides[currentIndex].url})`,
+        backgroundImage: `url(${(PF + slides[currentIndex]).replace(/\\/g, "/")})`,
         backgroundRepeat: "no-repeat",
         overflow: "hidden",
     };
@@ -82,7 +83,7 @@ const ImageSlider = ({ slides }) => {
                         key={slideIndex}
                         onClick={() => goToSlide(slideIndex)}
                     >
-                        <img className="w-36" src={slide.url} alt="" srcSet="" />
+                        <img className="w-36" src={PF + slide} alt="" srcSet="" />
                     </div>
                 ))}
             </div>

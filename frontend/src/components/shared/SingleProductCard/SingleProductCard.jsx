@@ -17,20 +17,22 @@ const SingleProductCard = ({ product }) => {
     }
     return (
         <div className='group'>
-            <div className='relative mb-3'>
-                <div className='flex items-center justify-center bg-gray cursor-pointer aspect-h-1 aspect-w-1 overflow-hidden'>
-                    <img className='h-full w-full object-cover object-center' src={PF + product?.image} alt="" />
+            <NavLink to={`/collections/${product._id}`} >
+                <div className='relative mb-3'>
+                    <div className='flex items-center justify-center bg-gray cursor-pointer aspect-h-1 aspect-w-1 overflow-hidden'>
+                        <img className='h-full w-full object-cover object-center' src={PF + product?.image} alt="" />
+                    </div>
+                    <span className='absolute top-3 left-3 bg-white rounded-xl text-xs py-1 px-2 font-medium'>20% OFF</span>
+                    <div className='absolute top-2 right-2 hidden flex-col space-y-1 group-hover:flex'>
+                        <button className='bg-white rounded-full p-1 hover:bg-black hover:text-white duration-200 ease-in'><HeartIcon className='h-6 w-6' /></button>
+                        <button className='bg-white rounded-full p-1 hover:bg-black hover:text-white duration-200 ease-in'><Bars3BottomRightIcon className='h-6 w-6 rotate-90' /></button>
+                        <button className='bg-white rounded-full p-1 hover:bg-black hover:text-white duration-200 ease-in'><MagnifyingGlassIcon className='h-6 w-6' /></button>
+                    </div>
+                    <button onClick={handleAddToCart} className='absolute bottom-0 bg-black w-full text-white py-3 hidden group-hover:block duration-200 ease-in'>Add to cart</button>
                 </div>
-                <span className='absolute top-3 left-3 bg-white rounded-xl text-xs py-1 px-2 font-medium'>20% OFF</span>
-                <div className='absolute top-2 right-2 hidden flex-col space-y-1 group-hover:flex'>
-                    <button className='bg-white rounded-full p-1 hover:bg-black hover:text-white duration-200 ease-in'><HeartIcon className='h-6 w-6' /></button>
-                    <button className='bg-white rounded-full p-1 hover:bg-black hover:text-white duration-200 ease-in'><Bars3BottomRightIcon className='h-6 w-6 rotate-90' /></button>
-                    <button className='bg-white rounded-full p-1 hover:bg-black hover:text-white duration-200 ease-in'><MagnifyingGlassIcon className='h-6 w-6' /></button>
-                </div>
-                <button onClick={handleAddToCart} className='absolute bottom-0 bg-black w-full text-white py-3 hidden group-hover:block duration-200 ease-in'>Add to cart</button>
-            </div>
+            </NavLink>
 
-            <span><NavLink to="#">{product?.name}</NavLink></span>
+            <span><NavLink to={`/collections/${product._id}`}>{product?.name}</NavLink></span>
 
             <div className='my-2'>
                 <span className='text-lg mr-4'>${product?.price} </span>

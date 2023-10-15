@@ -22,8 +22,8 @@ router.delete('/products/:id', adminAuth, productController.deleteProduct);
 
 // Category Routes
 router.post('/categories', adminAuth, categoryController.createCategory);
-router.get('/categories', userAuth, categoryController.getAllCategories);
-router.get('/categories/:id', userAuth, categoryController.getCategory);
+router.get('/categories', categoryController.getAllCategories);
+router.get('/categories/:id', categoryController.getCategory);
 router.put('/categories/:id', adminAuth, categoryController.updateCategory);
 router.delete('/categories/:id', adminAuth, categoryController.deleteCategory);
 

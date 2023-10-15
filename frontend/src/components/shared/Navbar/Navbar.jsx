@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { MagnifyingGlassIcon, UserIcon, HeartIcon, ShoppingCartIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import Dropdown from '../../Dropdown/Dropdown';

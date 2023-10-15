@@ -1,22 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Breadcrumb from '../../components/shared/Breadcrumb/Breadcrumb';
 import Checkbox from '../../components/shared/Checkbox/Checkbox';
 import { HeartIcon, MinusSmallIcon, PlusSmallIcon, ShoppingCartIcon, StarIcon } from '@heroicons/react/24/outline';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
+import { useLocation } from 'react-router-dom';
+import { getProduct } from '../../http';
 
 const SingleProduct = () => {
-    const slides = [
-        { url: "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg", title: "beach" },
-        { url: "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg", title: "boat" },
-        { url: "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-03.jpg", title: "forest" },
-        { url: "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg", title: "city" },
-        { url: "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-03.jpg", title: "italy" },
-    ];
 
-    const containerStyles = {
-        height: "100%",
-        margin: "0 auto",
-    };
+    // const containerStyles = {
+    //     height: "100%",
+    //     margin: "0 auto",
+    // };
 
     const [qty, setQty] = useState(1);
 
@@ -29,6 +24,24 @@ const SingleProduct = () => {
             }
         }
     }
+
+    const location = useLocation();
+    const path = location.pathname.split("/")[2];
+    const [product, setProduct] = useState({});
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const { data } = await getProduct(path);
+                setProduct(data);
+                setLoading(false);
+            } catch (error) {
+                console.log(error.response.data.message);
+            }
+        }
+        fetchProduct();
+    }, [path]);
     return (
         <>
             <div className='my-5'>
@@ -37,57 +50,46 @@ const SingleProduct = () => {
 
             <div className='flex mb-10 mx-12'>
                 <div className='basis-7/12'>
-                    <div style={containerStyles}>
-                        <ImageSlider slides={slides} />
-                    </div>
+                    {product.images && <ImageSlider slides={product.images} />}
                 </div>
 
                 <div className='basis-5/12 flex flex-col p-6'>
-                    <span className='font-medium text-sm text-fadeFont'>Canon</span>
-                    <h2 className='font-semibold text-3xl my-4'>Apple Cinema 30</h2>
+                    <span className='font-medium text-sm text-fadeFont'>{product.brand}</span>
+                    <h2 className='font-semibold text-3xl my-4'>{product.name}</h2>
                     <div className='flex items-center space-x-5 mb-4'>
                         <div className='flex items-center space-x-2'>
-                            <StarIcon className='w-5 h-5' />
-                            <StarIcon className='w-5 h-5' />
-                            <StarIcon className='w-5 h-5' />
-                            <StarIcon className='w-5 h-5' />
-                            <StarIcon className='w-5 h-5' />
+                            {product.rating && [...Array(product.rating).keys()].map((_, index) => (
+                                <StarIcon key={index} className='w-5 h-5 fill-black' />
+                            ))}
+                            {product.rating && [...Array(5 - product.rating).keys()].map((_, index) => (
+                                <StarIcon key={index} className='w-5 h-5' />
+                            ))}
                         </div>
                         <button>Write a review</button>
                     </div>
                     <div className='flex items-center space-x-10'>
                         <span>Availability</span>
-                        <span className='font-medium'>In Stock</span>
+                        {product.countInStock > 0 ? <span className='text-green'>In Stock</span> : <span className='text-red'>Out of Stock</span>}
                     </div>
-                    <div className='font-semibold text-red text-4xl my-4'>$146.00</div>
+                    <div className='font-semibold text-red text-4xl my-4'>₹ {product.price}</div>
                     <div className='mb-4'>
                         <span className='font-medium'>Color</span>
                         <div className='mt-2'>
                             <div className='flex space-x-3'>
-                                <div className=' border-[3px] p-[3px] cursor-pointer rounded-full'>
-                                    <div className='h-6 w-6 bg-black rounded-full'></div>
-                                </div>
-                                <div className=' border-[3px] p-[3px] cursor-pointer rounded-full'>
-                                    <div className='h-6 w-6 bg-black rounded-full'></div>
-                                </div>
-                                <div className=' border-[3px] p-[3px] cursor-pointer rounded-full'>
-                                    <div className='h-6 w-6 bg-black rounded-full'></div>
-                                </div>
-                                <div className=' border-[3px] p-[3px] cursor-pointer rounded-full'>
-                                    <div className='h-6 w-6 bg-black rounded-full'></div>
-                                </div>
-                                <div className=' border-[3px] p-[3px] cursor-pointer rounded-full'>
-                                    <div className='h-6 w-6 bg-black rounded-full'></div>
-                                </div>
+                                {product.colors && product.colors.map((color, index) => (
+                                    <div key={index} className=' border-[3px] p-[3px] cursor-pointer rounded-full'>
+                                        <div style={{backgroundColor: color}} className={`h-6 w-6 rounded-full`}></div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
                     <div className='mb-4'>
                         <span className='font-medium'>Size</span>
                         <div className='space-x-5 mt-2'>
-                            <span className='border-[1px] py-1 px-5 rounded-full'>S</span>
-                            <span className='border-[1px] py-1 px-5 rounded-full'>M</span>
-                            <span className='border-[1px] py-1 px-5 rounded-full'>L</span>
+                            {product.sizes && product.sizes.map((size, index) => (
+                                <span key={index} className='border-[1px] py-1 px-5 rounded-full'>{size}</span>
+                            ))}
                         </div>
                     </div>
                     <div className='mb-4'>

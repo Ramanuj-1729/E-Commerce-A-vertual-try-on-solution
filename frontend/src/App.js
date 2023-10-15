@@ -23,7 +23,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="collections" element={<Collections />} />
         <Route path='collections/all' element={<ProductList />} />
-        <Route path='collections/single-product' element={<SingleProduct />} />
+        <Route path='collections/:id' element={<SingleProduct />} />
         {isAuth ?
           <Route path="account" element={<Account />}>
             <Route path={`/account/${user}`} element={<AccountPage />} />
