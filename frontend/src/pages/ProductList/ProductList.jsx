@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SingleProductCard from '../../components/shared/SingleProductCard/SingleProductCard';
 import Breadcrumb from '../../components/shared/Breadcrumb/Breadcrumb';
-import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import Filters from '../../components/Filters/Filters';
 import Pagination from '../../components/shared/Pagination/Pagination';
 import { getProducts } from '../../http';
@@ -10,6 +9,9 @@ const ProductList = () => {
     const [gridCols, setGridCols] = useState(3);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [sortBy, setSortBy] = useState('Price - high to low');
+    const [itemsPerPage, setItemsPerPage] = useState(6);
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -22,6 +24,34 @@ const ProductList = () => {
         }
         fetchProducts();
     }, []);
+
+    const handleSortByChange = (e) => {
+        e.preventDefault();
+        setSortBy(e.target.value);
+    }
+
+    if (sortBy === 'Alphabetically, A - Z') {
+        products.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === 'Alphabetically, Z - A') {
+        products.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (sortBy === 'Price - low to high') {
+        products.sort((a, b) => a.price - b.price);
+    } else if (sortBy === 'Price - high to low') {
+        products.sort((a, b) => b.price - a.price);
+    }
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
+
+    const handleItemPerPage = (event) => {
+        setItemsPerPage(event.target.value);
+    }
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentProducts = products.slice(indexOfFirstItem, indexOfLastItem);
+
     return (
         <div className='mt-4 mb-10'>
             <div className='mt-5 mb-10'>
@@ -33,7 +63,7 @@ const ProductList = () => {
                         <h1 className='font-semibold text-4xl'>Products</h1>
                     </div>
                     <div>
-                        <Filters />
+                        <Filters products={products} />
                     </div>
                 </div>
 
@@ -48,27 +78,42 @@ const ProductList = () => {
                         <div className='flex space-x-5 items-center'>
                             <div className='flex items-center'>
                                 <span className='mr-3 font-light'>Sort by</span>
-                                <span>Alphabetically, A - Z</span>
-                                <ChevronDownIcon className='h-4 w-4' />
+
+                                <select id="sortby" className='outline-none' value={sortBy} onChange={handleSortByChange}>
+                                    <option value="Alphabetically, A - Z">Alphabetically, A - Z</option>
+                                    <option value="Alphabetically, Z - A">Alphabetically, Z - A</option>
+                                    <option value="Price - low to high">Price - low to high</option>
+                                    <option value="Price - high to low">Price - high to low</option>
+                                </select>
                             </div>
                             <div className='flex items-center'>
                                 <span className='mr-3 font-light'>Show</span>
-                                <span>12</span>
-                                <ChevronDownIcon className='h-4 w-4' />
+                                <select id="show" className='outline-none' value={itemsPerPage} onChange={handleItemPerPage}>
+                                    <option value={6}>6</option>
+                                    <option value={8}>8</option>
+                                    <option value={9}>9</option>
+                                    <option value={10}>10</option>
+                                    <option value={12}>12</option>
+                                    <option value={14}>14</option>
+                                    <option value={15}>15</option>
+                                    <option value={16}>16</option>
+                                    <option value={20}>20</option>
+                                    <option value={24}>24</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div className='flex items-center justify-center flex-col'>
                         <div style={{ gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))` }} className='grid gap-8'>
                             {loading ? <h1>Loading...</h1> :
-                                products.map((product) => {
+                                currentProducts.map((product) => {
                                     return (
                                         <SingleProductCard key={product._id} product={product} />
                                     )
                                 })
                             }
                         </div>
-                        <Pagination />
+                        <Pagination count={Math.ceil(products.length / itemsPerPage)} page={currentPage} onChange={handlePageChange}/>
                     </div>
                 </div>
             </div>

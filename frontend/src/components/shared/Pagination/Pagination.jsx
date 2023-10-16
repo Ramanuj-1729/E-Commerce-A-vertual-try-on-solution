@@ -1,8 +1,8 @@
 import PaginationComponent from '@mui/material/Pagination';
 
-const Pagination = () => {
+const Pagination = ({count, page, onChange}) => {
     return (
-        <PaginationComponent className='my-10' count={10} size="large" />
+        <PaginationComponent className='my-10' count={count} page={page} onChange={onChange} size="large" />
     );
 }
 

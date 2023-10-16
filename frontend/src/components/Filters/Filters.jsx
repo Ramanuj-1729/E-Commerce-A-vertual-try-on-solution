@@ -4,7 +4,8 @@ import Slider from '@mui/material/Slider';
 import CheckboxFilter from './CheckboxFilter/CheckboxFilter';
 import { getCategories } from '../../http';
 
-const Filters = () => {
+const Filters = ({ products }) => {
+    // console.log(products);
     const [value, setValue] = useState([0, 10000]);
 
     const handleChange = (event, newPrice) => {
@@ -12,6 +13,8 @@ const Filters = () => {
     };
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [brands, setBrands] = useState({});
+    const [sizes, setSizes] = useState({});
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -24,6 +27,25 @@ const Filters = () => {
         }
         fetchUsers();
     }, []);
+
+    useEffect(() => {
+        const brandCounts = products.reduce((acc, product) => {
+            acc[product.brand] = (acc[product.brand] || 0) + 1;
+            return acc;
+        }, {});
+        setBrands(brandCounts);
+        const sizesWithCounts = products.flatMap(product => product.sizes).reduce((acc, size) => {
+            acc[size] = (acc[size] || 0) + 1;
+            return acc;
+        }, {});
+        setSizes(sizesWithCounts);
+    }, [products]);
+
+    const brandKeys = Object.keys(brands);
+    const brandValues = Object.values(brands);
+
+    const sizeKeys = Object.keys(sizes);
+    const sizeValues = Object.values(sizes);
     return (
         <div className='w-80'>
             <FilterTemplate heading="All Categories">
@@ -39,21 +61,39 @@ const Filters = () => {
             </FilterTemplate>
 
             <FilterTemplate heading="Colors">
-                <div className='flex space-x-3'>
-                    <div className=' border-[3px] p-[3px] cursor-pointer rounded-full'>
-                        <div className='h-6 w-6 bg-black rounded-full'></div>
+                <div className='grid grid-cols-7 gap-3'>
+                    <div className='bg-[#dee0df] border-[3px] p-[3px] cursor-pointer rounded-full'>
+                        <div className='h-6 w-6 bg-[red] rounded-full'></div>
                     </div>
-                    <div className=' border-[3px] p-[3px] cursor-pointer rounded-full'>
-                        <div className='h-6 w-6 bg-black rounded-full'></div>
+                    <div className='bg-[#dee0df] border-[3px] p-[3px] cursor-pointer rounded-full'>
+                        <div className='h-6 w-6 bg-[yellow] rounded-full'></div>
                     </div>
-                    <div className=' border-[3px] p-[3px] cursor-pointer rounded-full'>
-                        <div className='h-6 w-6 bg-black rounded-full'></div>
+                    <div className='bg-[#dee0df] border-[3px] p-[3px] cursor-pointer rounded-full'>
+                        <div className='h-6 w-6 bg-[green] rounded-full'></div>
                     </div>
-                    <div className=' border-[3px] p-[3px] cursor-pointer rounded-full'>
-                        <div className='h-6 w-6 bg-black rounded-full'></div>
+                    <div className='bg-[#dee0df] border-[3px] p-[3px] cursor-pointer rounded-full'>
+                        <div className='h-6 w-6 bg-[gray] rounded-full'></div>
                     </div>
-                    <div className=' border-[3px] p-[3px] cursor-pointer rounded-full'>
-                        <div className='h-6 w-6 bg-black rounded-full'></div>
+                    <div className='bg-[#dee0df] border-[3px] p-[3px] cursor-pointer rounded-full'>
+                        <div className='h-6 w-6 bg-[brown] rounded-full'></div>
+                    </div>
+                    <div className='bg-[#dee0df] border-[3px] p-[3px] cursor-pointer rounded-full'>
+                        <div className='h-6 w-6 bg-[pink] rounded-full'></div>
+                    </div>
+                    <div className='bg-[#dee0df] border-[3px] p-[3px] cursor-pointer rounded-full'>
+                        <div className='h-6 w-6 bg-[white] rounded-full'></div>
+                    </div>
+                    <div className='bg-[#dee0df] border-[3px] p-[3px] cursor-pointer rounded-full'>
+                        <div className='h-6 w-6 bg-[blue] rounded-full'></div>
+                    </div>
+                    <div className='bg-[#dee0df] border-[3px] p-[3px] cursor-pointer rounded-full'>
+                        <div className='h-6 w-6 bg-[orange] rounded-full'></div>
+                    </div>
+                    <div className='bg-[#dee0df] border-[3px] p-[3px] cursor-pointer rounded-full'>
+                        <div className='h-6 w-6 bg-[purple] rounded-full'></div>
+                    </div>
+                    <div className='bg-[#dee0df] border-[3px] p-[3px] cursor-pointer rounded-full'>
+                        <div className='h-6 w-6 bg-[cyan] rounded-full'></div>
                     </div>
                 </div>
             </FilterTemplate>
@@ -68,7 +108,7 @@ const Filters = () => {
                         onChange={handleChange}
                         valueLabelDisplay="auto"
                         aria-labelledby='range-slider'
-                        getAriaValueText={0}
+                        // getAriaValueText={0}
                         min={0}
                         max={10000}
                     />
@@ -80,15 +120,19 @@ const Filters = () => {
             </FilterTemplate>
 
             <FilterTemplate heading="Size">
-                <CheckboxFilter label="S" value="5" />
-                <CheckboxFilter label="M" value="2" />
-                <CheckboxFilter label="L" value="2" />
+                {sizeKeys.map((size, index) => {
+                    return (
+                        <CheckboxFilter key={index} label={size} value={sizeValues[index]} />
+                    );
+                })}
             </FilterTemplate>
 
             <FilterTemplate heading="Brand">
-                <CheckboxFilter label="Canon" value="5" />
-                <CheckboxFilter label="Vendor" value="2" />
-                <CheckboxFilter label="Chad Boxed" value="2" />
+                {brandKeys.map((brand, index) => {
+                    return (
+                        <CheckboxFilter key={index} label={brand} value={brandValues[index]} />
+                    );
+                })}
             </FilterTemplate>
         </div>
     );
