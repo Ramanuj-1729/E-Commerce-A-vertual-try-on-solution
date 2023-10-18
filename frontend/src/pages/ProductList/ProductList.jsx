@@ -12,11 +12,22 @@ const ProductList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [sortBy, setSortBy] = useState('Price - high to low');
     const [itemsPerPage, setItemsPerPage] = useState(6);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
+
+    const handleItemPerPage = (event) => {
+        setItemsPerPage(event.target.value);
+    }
+
     useEffect(() => {
         const fetchProducts = async () => {
             try {
                 const { data } = await getProducts();
                 setProducts(data);
+                setFilteredProducts(data);
                 setLoading(false);
             } catch (error) {
                 console.log(error.response.data.message);
@@ -40,17 +51,8 @@ const ProductList = () => {
         products.sort((a, b) => b.price - a.price);
     }
 
-    const handlePageChange = (event, value) => {
-        setCurrentPage(value);
-    };
-
-    const handleItemPerPage = (event) => {
-        setItemsPerPage(event.target.value);
-    }
-
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentProducts = products.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
         <div className='mt-4 mb-10'>
@@ -63,7 +65,7 @@ const ProductList = () => {
                         <h1 className='font-semibold text-4xl'>Products</h1>
                     </div>
                     <div>
-                        <Filters products={products} />
+                        <Filters products={products} setFilteredProducts={setFilteredProducts} />
                     </div>
                 </div>
 
@@ -89,6 +91,7 @@ const ProductList = () => {
                             <div className='flex items-center'>
                                 <span className='mr-3 font-light'>Show</span>
                                 <select id="show" className='outline-none' value={itemsPerPage} onChange={handleItemPerPage}>
+                                    <option value={3}>3</option>
                                     <option value={6}>6</option>
                                     <option value={8}>8</option>
                                     <option value={9}>9</option>
@@ -106,14 +109,14 @@ const ProductList = () => {
                     <div className='flex items-center justify-center flex-col'>
                         <div style={{ gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))` }} className='grid gap-8'>
                             {loading ? <h1>Loading...</h1> :
-                                currentProducts.map((product) => {
+                                filteredProducts.slice(indexOfFirstItem, indexOfLastItem).map((product) => {
                                     return (
                                         <SingleProductCard key={product._id} product={product} />
                                     )
                                 })
                             }
                         </div>
-                        <Pagination count={Math.ceil(products.length / itemsPerPage)} page={currentPage} onChange={handlePageChange}/>
+                        <Pagination count={Math.ceil(products.length / itemsPerPage)} page={currentPage} onChange={handlePageChange} />
                     </div>
                 </div>
             </div>

@@ -22,5 +22,6 @@ export const getAddresses = (userId) => api.get(`/addresses/${userId}`);
 export const deleteAddress = (addressId) => api.delete(`/addresses/${addressId}`);
 export const addAddress = (address) => api.post('/addresses', address);
 export const updateAddress = (address, addressId) => api.put(`/addresses/${addressId}`, address);
+export const checkoutSession = (products) => api.post('/create-checkout-session', products);
 
 export default api;

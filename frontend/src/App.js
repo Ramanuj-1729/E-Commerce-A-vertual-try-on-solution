@@ -11,6 +11,8 @@ import Cart from './pages/Cart/Cart';
 import Wishlist from './pages/Wishlist/Wishlist';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
 import AccountPage from './components/AccountPage/AccountPage';
+import CheckoutSuccess from './pages/Checkout/CheckoutSuccess';
+import CheckoutFail from './pages/Checkout/CheckoutFail';
 import { useSelector } from 'react-redux';
 
 const App = () => {
@@ -35,6 +37,8 @@ const App = () => {
         }
         <Route path='cart' element={<Cart />} />
         <Route path='wishlist' element={<Wishlist />} />
+        <Route path='checkout/success' element={<CheckoutSuccess />} />
+        <Route path='checkout/fail' element={<CheckoutFail />} />
       </Routes>
       <Footer />
     </Router>

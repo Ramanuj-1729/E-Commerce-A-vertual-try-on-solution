@@ -33,6 +33,7 @@ router.get('/orders', userAuth, orderController.getOrders);
 router.get('/orders/:id', userAuth, orderController.getOrder);
 router.put('/orders/:id', userAuth, orderController.updateOrder);
 router.delete('/orders/:id', userAuth, orderController.deleteOrder);
+router.post('/create-checkout-session', userAuth, orderController.createCheckoutSession);
 
 // Address Routes
 router.post('/addresses', userAuth, addressController.createAddress);

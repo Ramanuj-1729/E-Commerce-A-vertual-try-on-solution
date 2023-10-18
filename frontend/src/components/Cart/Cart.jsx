@@ -1,18 +1,44 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetColorName } from 'hex-color-to-color-name';
 import { removeFromCart } from '../../store/cartSlice';
+import { loadStripe } from '@stripe/stripe-js';
+import { checkoutSession } from '../../http';
 
 
 const Cart = ({ onCloseClick, toggleCart }) => {
     const { cartItems, cartTotalQuantity, cartTotalAmount } = useSelector((state) => state.cartSlice);
+    const { isAuth } = useSelector((state) => state.authSlice);
     const PF = 'http://localhost:5000/';
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const handleRemoveFromCart = (product) => {
         dispatch(removeFromCart(product));
     };
+
+    const handleCheckout = async () => {
+        const stripe = await loadStripe('pk_test_51NdqtISEDKkoqmSTm8m11oENLJBcHTeW2J19LpumcOsP88Jl4uPAEA3rB7AeWi9RuJ4g85Apdv3dwoJc4fjvph3j00J6NUZ0so');
+
+        try {
+            const { data } = await checkoutSession(cartItems);
+
+            try {
+                const result = stripe.redirectToCheckout({
+                    sessionId: data.id
+                });
+    
+                // if (result.error) {
+                //     console.log(result.error);
+                // }
+            } catch (error) {
+                console.log(error);
+            }
+        } catch (error) {
+            console.log(error.response.data.message);
+        }
+    }
     return (
         <div style={toggleCart === true ? { right: '0' } : { right: '-110%' }} className={`fixed top-0 bg-white h-screen z-30 flex items-center flex-col px-8 py-8 duration-500 ease-out ${toggleCart === true ? 'cartSidebarShadow' : ''}`}>
             <div className='flex items-center justify-center border-b-[1px] border-gray space-x-28 pb-5 w-full'>
@@ -69,7 +95,13 @@ const Cart = ({ onCloseClick, toggleCart }) => {
                         </div>
                         <div className='flex items-center justify-center flex-col'>
                             <NavLink onClick={() => onCloseClick()} to="/cart" className=" font-medium text-2xl border-b-2 border-red pb-2 mb-5">View Cart</NavLink>
-                            <button className='bg-black text-white py-3 w-full rounded text-xl font-medium'>Checkout</button>
+                            {
+                                isAuth
+                                    ?
+                                    <button onClick={handleCheckout} className='bg-black text-white py-3 w-full rounded text-xl font-medium'>Checkout</button>
+                                    :
+                                    <button onClick={() => { navigate('/account/login'); onCloseClick(); }} className='bg-black text-white py-3 w-full rounded text-xl font-medium'>Login to Checkout</button>
+                            }
                         </div>
                     </div>
             }

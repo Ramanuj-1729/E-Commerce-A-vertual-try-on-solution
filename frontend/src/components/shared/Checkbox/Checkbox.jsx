@@ -1,6 +1,6 @@
 import CheckboxIcon from '@mui/material/Checkbox';
 
-const Checkbox = ({color}) => {
+const Checkbox = ({checked, onChange, color}) => {
     return (
         <CheckboxIcon
             sx={{
@@ -9,6 +9,8 @@ const Checkbox = ({color}) => {
                 },
                 '& .MuiSvgIcon-root': { fontSize: 28 }
             }}
+            onChange={onChange}
+            checked={checked}
         />
     )
 }

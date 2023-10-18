@@ -4,12 +4,57 @@ import Slider from '@mui/material/Slider';
 import CheckboxFilter from './CheckboxFilter/CheckboxFilter';
 import { getCategories } from '../../http';
 
-const Filters = ({ products }) => {
+const Filters = ({ products, setFilteredProducts }) => {
     // console.log(products);
-    const [value, setValue] = useState([0, 10000]);
+    const [price, setPrice] = useState([0, 10000]);
+    const [selectedSizes, setSelectedSizes] = useState([]);
+    const [selectedBrands, setSelectedBrands] = useState([]);
 
-    const handleChange = (event, newPrice) => {
-        setValue(newPrice);
+    const handlePriceChange = (event, newPrice) => {
+        setPrice(newPrice);
+    };
+
+    const handleSizeChange = (size) => {
+        if (selectedSizes.includes(size)) {
+            setSelectedSizes(selectedSizes.filter((s) => s !== size));
+        } else {
+            setSelectedSizes([...selectedSizes, size]);
+        }
+        const sizeFilteredProducts =
+            selectedSizes.length > 0
+                ? products.filter((product) => selectedSizes.some((size) => product.sizes.includes(size)))
+                : products;
+
+        setFilteredProducts(sizeFilteredProducts);
+    };
+
+    const handleBrandChange = (brand) => {
+        if (selectedBrands.includes(brand)) {
+            setSelectedBrands(selectedBrands.filter((b) => b !== brand));
+        } else {
+            setSelectedBrands([...selectedBrands, brand]);
+        }
+        const brandFilteredProducts =
+            selectedBrands.length > 0
+                ? products.filter((product) => selectedBrands.some((brand) => product.brand.includes(brand)))
+                : products;
+
+        setFilteredProducts(brandFilteredProducts);
+    }
+
+    const submitPriceFilter = () => {
+        const priceFilterProducts = products.filter((product) => {
+            if (price[0] && price[1]) {
+                return product.price >= parseInt(price[0]) && product.price <= parseInt(price[1]);
+            } else if (price[0]) {
+                return product.price >= parseInt(price[0]);
+            } else if (price[1]) {
+                return product.price <= parseInt(price[1]);
+            }
+            return true;
+        });
+
+        setFilteredProducts(priceFilterProducts);
     };
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -104,8 +149,8 @@ const Filters = ({ products }) => {
                         sx={{
                             color: '#000000',
                         }}
-                        value={value}
-                        onChange={handleChange}
+                        value={price}
+                        onChange={handlePriceChange}
                         valueLabelDisplay="auto"
                         aria-labelledby='range-slider'
                         // getAriaValueText={0}
@@ -114,15 +159,15 @@ const Filters = ({ products }) => {
                     />
                 </div>
                 <div className='flex items-center justify-between mt-5'>
-                    <button className='bg-white border-[3px] rounded-sm border-black px-4 py-[6px] text-lg hover:bg-black hover:text-white transition duration-200 ease-out'>Filter</button>
-                    <span className='font-medium'>$ {value[0]}  -  $ {value[1]}</span>
+                    <button onClick={submitPriceFilter} className='bg-white border-[3px] rounded-sm border-black px-4 py-[6px] text-lg hover:bg-black hover:text-white transition duration-200 ease-out'>Filter</button>
+                    <span className='font-medium'>₹ {price[0]}  -  ₹ {price[1]}</span>
                 </div>
             </FilterTemplate>
 
             <FilterTemplate heading="Size">
                 {sizeKeys.map((size, index) => {
                     return (
-                        <CheckboxFilter key={index} label={size} value={sizeValues[index]} />
+                        <CheckboxFilter checked={selectedSizes.includes(size)} onChange={() => handleSizeChange(size)} key={index} label={size} value={sizeValues[index]} />
                     );
                 })}
             </FilterTemplate>
@@ -130,7 +175,7 @@ const Filters = ({ products }) => {
             <FilterTemplate heading="Brand">
                 {brandKeys.map((brand, index) => {
                     return (
-                        <CheckboxFilter key={index} label={brand} value={brandValues[index]} />
+                        <CheckboxFilter checked={selectedBrands.includes(brand)} onChange={() => handleBrandChange(brand)} key={index} label={brand} value={brandValues[index]} />
                     );
                 })}
             </FilterTemplate>
