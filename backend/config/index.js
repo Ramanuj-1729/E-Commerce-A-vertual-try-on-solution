@@ -7,6 +7,5 @@ module.exports = {
     DEBUG_MODE,
     ACCESS_JWT_SECRET,
     REFRESH_JWT_SECRET,
-    STRIPE_SECRET_KEY,
     FRONTEND_URL,
 } = process.env;

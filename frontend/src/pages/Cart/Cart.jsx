@@ -5,9 +5,12 @@ import ProductTable from "../../components/shared/ProductTable/ProductTable";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { decreaseCart, removeFromCart, increaseCart } from "../../store/cartSlice";
+import { loadStripe } from '@stripe/stripe-js';
+import { checkoutSession } from '../../http';
 
 const Cart = () => {
     const navigate = useNavigate();
+    const { isAuth } = useSelector((state) => state.authSlice);
     const { cartItems, cartTotalQuantity, cartTotalAmount } = useSelector((state) => state.cartSlice);
     const dispatch = useDispatch();
     const handleRemoveFromCart = (product) => {
@@ -19,6 +22,27 @@ const Cart = () => {
     const handleIncreaseCart = (product) => {
         dispatch(increaseCart(product));
     };
+    const handleCheckout = async () => {
+        const stripe = await loadStripe('pk_test_51NdqtISEDKkoqmSTm8m11oENLJBcHTeW2J19LpumcOsP88Jl4uPAEA3rB7AeWi9RuJ4g85Apdv3dwoJc4fjvph3j00J6NUZ0so');
+
+        try {
+            const { data } = await checkoutSession(cartItems);
+
+            try {
+                const result = stripe.redirectToCheckout({
+                    sessionId: data.id
+                });
+
+                // if (result.error) {
+                //     console.log(result.error);
+                // }
+            } catch (error) {
+                console.log(error);
+            }
+        } catch (error) {
+            console.log(error.response.data.message);
+        }
+    }
     return (
         <>
             <div className='mt-5'>
@@ -91,10 +115,17 @@ const Cart = () => {
                                         <ArrowSmallLeftIcon className="w-4 h-4 inline mr-2" />
                                         <span>Continue Shopping</span>
                                     </button>
-                                    <button className="flex items-center justify-center border-2 border-buttonColor w-72 py-3 rounded text-white bg-buttonColor">
-                                        <span>Checkout</span>
-                                        <ArrowRightOnRectangleIcon className="w-4 h-4 inline ml-2" />
-                                    </button>
+
+                                    {
+                                        isAuth
+                                            ?
+                                            <button onClick={handleCheckout} className="flex items-center justify-center border-2 border-buttonColor w-72 py-3 rounded text-white bg-buttonColor">
+                                                <span>Checkout</span>
+                                                <ArrowRightOnRectangleIcon className="w-4 h-4 inline ml-2" />
+                                            </button>
+                                            :
+                                            <button onClick={() => navigate('/account/login')} className='border-2 border-buttonColor w-72 py-3 rounded text-white bg-buttonColor'>Login to Checkout</button>
+                                    }
                                 </div>
                             </div>
                         </div>

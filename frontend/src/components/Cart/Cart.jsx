@@ -55,7 +55,7 @@ const Cart = ({ onCloseClick, toggleCart }) => {
                                     <li key={product._id} className="flex py-6">
                                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                             <img
-                                                src={PF + product.image}
+                                                src={product.image}
                                                 alt="product"
                                                 className="h-full w-full object-cover object-center"
                                             />

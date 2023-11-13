@@ -1,3 +1,4 @@
+const { FRONTEND_URL } = require('../../config');
 const Product = require('../../models/product');
 const CustomErrorHandler = require('../../services/CustomErrorHandler');
 const multer = require('multer');
@@ -61,7 +62,7 @@ const productController = {
                 productDocument = await Product.create({
                     name,
                     description,
-                    image: file.path,
+                    image: `http://localhost:5000/${file.path}`,
                     colors,
                     sizes,
                     brand,
@@ -102,7 +103,7 @@ const productController = {
             const product = await Product.findByIdAndUpdate(
                 req.params.id,
                 {
-                    image: file.path,
+                    image: `http://localhost:5000/${file.path}`,
                 },
                 { new: true },
             );
@@ -135,7 +136,7 @@ const productController = {
 
             if (files) {
                 files.map(file => {
-                    imagesPaths.push(file.path);
+                    imagesPaths.push(`http://localhost:5000/${file.path}`);
                 });
             }
 

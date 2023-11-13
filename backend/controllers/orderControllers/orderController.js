@@ -104,7 +104,7 @@ const orderController = {
                 currency: "inr",
                 product_data: {
                     name: product.name,
-                    // images: product.images,
+                    // images: [product.image],
                 },
                 unit_amount: product.price * 100,
             },

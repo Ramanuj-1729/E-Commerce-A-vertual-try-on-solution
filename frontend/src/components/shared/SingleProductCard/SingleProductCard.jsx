@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { addToCart, getTotals } from '../../../store/cartSlice';
 
 const SingleProductCard = ({ product }) => {
-    const PF = 'http://localhost:5000/';
     const [mainImage, setMainImage] = useState(product?.image);
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cartSlice);
@@ -22,7 +21,7 @@ const SingleProductCard = ({ product }) => {
             <NavLink to={`/collections/${product._id}`} >
                 <div className='relative mb-3'>
                     <div className='flex items-center justify-center bg-gray cursor-pointer aspect-h-1 aspect-w-1 overflow-hidden'>
-                        <img className=' h-[420px] w-full object-cover object-center' src={PF + mainImage} alt="" />
+                        <img className=' h-[420px] w-full object-cover object-center' src={mainImage} alt="" />
                     </div>
                     <span className='absolute top-3 left-3 bg-white rounded-xl text-xs py-1 px-2 font-medium'>20% OFF</span>
                     <div className='absolute top-2 right-2 hidden flex-col space-y-1 group-hover:flex'>
@@ -55,7 +54,7 @@ const SingleProductCard = ({ product }) => {
                     product?.images?.map((image, index) => {
                         return (
                             <button onClick={()=>setMainImage(image)} key={index} className='h-8 w-8 bg-gray rounded-full flex items-center justify-center overflow-hidden'>
-                                <img className='h-8' src={PF + image} alt="" />
+                                <img className='h-8' src={image} alt="" />
                             </button>
                         );
                     })
