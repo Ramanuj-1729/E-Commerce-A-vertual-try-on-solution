@@ -5,6 +5,8 @@ import { HeartIcon, MinusSmallIcon, PlusSmallIcon, ShoppingCartIcon, StarIcon } 
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import { useLocation } from 'react-router-dom';
 import { getProduct } from '../../http';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../store/cartSlice';
 
 const SingleProduct = () => {
 
@@ -42,6 +44,13 @@ const SingleProduct = () => {
         }
         fetchProduct();
     }, [path]);
+
+    const dispatch = useDispatch();
+
+    const handleAddToCart = (e) => {
+        e.preventDefault();
+        dispatch(addToCart(product));
+    }
     return (
         <>
             <div className='my-5'>
@@ -78,7 +87,7 @@ const SingleProduct = () => {
                             <div className='flex space-x-3'>
                                 {product.colors && product.colors.map((color, index) => (
                                     <div key={index} className=' border-[3px] p-[3px] cursor-pointer rounded-full'>
-                                        <div style={{backgroundColor: color}} className={`h-6 w-6 rounded-full`}></div>
+                                        <div style={{ backgroundColor: color }} className={`h-6 w-6 rounded-full`}></div>
                                     </div>
                                 ))}
                             </div>
@@ -100,7 +109,7 @@ const SingleProduct = () => {
                                 <span className="font-medium text-lg">{qty}</span>
                                 <PlusSmallIcon onClick={() => handleQty('increment')} className="w-6 h-6 cursor-pointer" />
                             </div>
-                            <button className='flex items-center justify-center space-x-2 bg-buttonColor text-white py-3 px-24 rounded text-xl'>
+                            <button onClick={handleAddToCart} className='flex items-center justify-center space-x-2 bg-buttonColor text-white py-3 px-24 rounded text-xl'>
                                 <ShoppingCartIcon className='w-6 h-6' />
                                 <span>Add to Cart</span>
                             </button>
