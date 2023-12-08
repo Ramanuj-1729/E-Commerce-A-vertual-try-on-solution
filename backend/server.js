@@ -19,7 +19,7 @@ db.once('open', () => console.log('DB connected ...'));
 
 global.appRoot = path.resolve(__dirname);
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'https://ecocart.vercel.app/',
     credentials: true,
     optionSuccessStatus: 200
 }
