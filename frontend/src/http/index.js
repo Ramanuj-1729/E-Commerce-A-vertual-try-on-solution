@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://easy-gray-betta-yoke.cyclic.app/api/v1',
+    baseURL: 'https://frantic-kerchief-slug.cyclic.app/api/v1',
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
