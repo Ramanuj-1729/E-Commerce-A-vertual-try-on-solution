@@ -115,8 +115,8 @@ const orderController = {
             payment_method_types: ["card"],
             line_items: lineItems,
             mode: "payment",
-            success_url: "http://localhost:3000/checkout/success",
-            cancel_url: "http://localhost:3000/checkout/fail",
+            success_url: "https://ecocart.vercel.app/checkout/success",
+            cancel_url: "https://ecocart.vercel.app/checkout/fail",
         });
 
         res.json({ id: session.id })
